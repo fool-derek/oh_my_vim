@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #########################################################################
-# File Name: cl_ftp.py
+# File Name: client_ftp.py
 # Author: 陈昌栋
 # Mail: ccdaccd@163.com
 # Created Time: Sat 16 Jan 2016 05:34:02 PM CST
