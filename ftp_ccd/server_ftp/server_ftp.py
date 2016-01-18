@@ -21,7 +21,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                 print "客户端%s已断开！" % self.client_address[0]
                 break
             user_input = self.data.split()
-            if user_input[0] == 'get':
+            if user_input[0] == 'clone':
                 print '开始传输文件...'
                 try:
                     with open(user_input[1],'rb') as f:
