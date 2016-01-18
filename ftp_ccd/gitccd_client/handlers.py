@@ -7,6 +7,7 @@
 # Created Time: Sun 17 Jan 2016 06:38:24 PM CST
 #########################################################################
 import commands
+import time
 class Handler:
     """
     处理从Parser调用的方法的对象。
@@ -53,3 +54,19 @@ class GitccdOperate(Handler):
                     f.write(data)
                     print '下载文件中...'
                 f.close()
+
+    def gitccd_push(self, sock, cmd):
+        for filename in cmd.split()[1:]:
+            getfile_cmd = cmd.split()[0] + ' ' + filename
+            sock.sendall(getfile_cmd)
+            print "开始上传文件..."
+            try:
+                with open(filename,'rb') as f:
+                    sock.sendall(f.read())
+                time.sleep(0.5)
+                sock.send('FileTransferDone')
+                continue
+            except IOError:
+                sock.sendall('IOError')
+                print '%s这个文件不存在或者文件读写错误!' % filename
+                continue
