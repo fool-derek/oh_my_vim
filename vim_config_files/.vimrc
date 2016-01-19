@@ -133,15 +133,15 @@ nmap <C-B> :u<CR>
 nnoremap <leader>s :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 
-set pastetoggle=<C-Y>            "    when in insert mode, press Ctrl-Y to go to
+set pastetoggle=<C-G>            "    when in insert mode, press Ctrl-G to go to
                                 "    paste mode, where you can paste mass data
                                 "    that won't be autoindented
 
 " disbale paste mode when leaving insert mode
 au InsertLeave * set nopaste
 
-" Ctrl-Y set paste问题已解决, 粘贴代码前不需要按Ctrl-Y了
-" Ctrl-Y 粘贴模式paste_mode开关,用于有格式的代码粘贴
+" Ctrl-G set paste问题已解决, 粘贴代码前不需要按Ctrl-G了
+" Ctrl-G 粘贴模式paste_mode开关,用于有格式的代码粘贴
 " Automatically set paste mode in Vim when pasting in insert mode
 function! XTermPasteBegin()
   set pastetoggle=<Esc>[201~
