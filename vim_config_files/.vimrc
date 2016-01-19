@@ -34,7 +34,6 @@ set shortmess=atI
 set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
 set title " change the terminal's title
 
-
 let mapleader = "," "leader映射为逗号“，”!!!
 set background=dark "设置背景色
 set number " 显示行号
