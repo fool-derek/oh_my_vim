@@ -118,7 +118,7 @@ function! NumberToggle()
     set relativenumber
   endif
 endfunc
-nnoremap <leader>c :call NumberToggle()<cr>
+nnoremap <leader>lr :call NumberToggle()<cr> ",+lr
 
 "使用Ctrl+Z保存
 imap <C-Z> <C-O>:update<CR>
@@ -287,7 +287,7 @@ function! HideNumber()
   endif
   set number?
 endfunc
-nnoremap <leader>ln :call HideNumber()<CR>
+nnoremap <leader>lh :call HideNumber()<CR>
 
 " 保存python文件时删除多余空格
 fun! <SID>StripTrailingWhitespaces()
