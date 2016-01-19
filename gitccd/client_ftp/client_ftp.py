@@ -59,4 +59,5 @@ while True:
     else:
         s.sendall(cmd)
         print s.recv(1024)
+
 s.close()
