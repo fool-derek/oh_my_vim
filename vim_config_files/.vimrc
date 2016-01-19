@@ -133,7 +133,7 @@ nmap <C-B> :u<CR>
 nnoremap <leader>s :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 
-set pastetoggle=<C-G>            "    when in insert mode, press Ctrl-G to go to
+set pastetoggle=<C-G>           "    when in insert mode, press Ctrl-G to go to
                                 "    paste mode, where you can paste mass data
                                 "    that won't be autoindented
 
