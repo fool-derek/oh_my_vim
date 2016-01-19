@@ -118,7 +118,7 @@ function! NumberToggle()
     set relativenumber
   endif
 endfunc
-nnoremap <leader>lr :call NumberToggle()<cr> ",+lr
+nnoremap <leader>lr :call NumberToggle()<cr> "插入模式下用绝对行号<leader>lr开关绝对行号
 
 "使用Ctrl+Z保存
 imap <C-Z> <C-O>:update<CR>
@@ -130,7 +130,7 @@ imap <C-B> <C-O>:u<CR>
 vmap <C-B> <C-O>:u<CR>
 nmap <C-B> :u<CR>
 
-" ,s 语法开关，关闭语法可以加快大文件的展示
+" <leader>s 语法开关，关闭语法可以加快大文件的展示
 nnoremap <leader>s :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 
@@ -141,7 +141,7 @@ set pastetoggle=<C-Y>            "    when in insert mode, press Ctrl-Y to go to
 " disbale paste mode when leaving insert mode
 au InsertLeave * set nopaste
 
-" Ctrl-Y set paste问题已解决, 粘贴代码前不需要按F5了
+" Ctrl-Y set paste问题已解决, 粘贴代码前不需要按Ctrl-Y了
 " Ctrl-Y 粘贴模式paste_mode开关,用于有格式的代码粘贴
 " Automatically set paste mode in Vim when pasting in insert mode
 function! XTermPasteBegin()
@@ -165,20 +165,17 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <Leader>z :ZoomToggle<CR>
-
+nnoremap <silent> <Leader>z :ZoomToggle<CR>   "<leader>z 触发放大 (没有作用)
 
 " Go to home and end using capitalized directions
-noremap H ^
-noremap L $
-
+noremap H ^    " H一行第一个字符处
+noremap L $    "L一行最后一个字符处
 
 " Map ; to : and save a million keystrokes 用于快速进入命令行
 nnoremap ; :
 
-
 " 搜索相关
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search) 通模式下 “空格”查找
 map <space> /
 " 进入搜索Use sane regexes"
 nnoremap / /\v
@@ -191,7 +188,7 @@ vnoremap / /\v
 "nnoremap <silent> # #zz
 "nnoremap <silent> g* g*zz
 
-" 去掉搜索高亮
+" <leader>.去掉搜索高亮
 noremap <silent><leader>. :nohls<CR>
 
 
@@ -207,10 +204,10 @@ map Y y$
 " 复制选中区到系统剪切板中
 vnoremap <leader>p "+y
 
-" select all
+" select all 全选
 map <Leader>a ggVG"
 
-" select block
+" select block 选择块
 nnoremap <leader>v V`}
 
 
@@ -274,9 +271,8 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-
-" ,ln行号开关，用于鼠标复制代码用
-" 为方便复制，用<F2>开启/关闭行号显示:
+" <leader>lh行号开关，用于鼠标复制代码用
+" 为方便复制，用<leader>lh开启/关闭行号显示:
 function! HideNumber()
   if(&relativenumber == &number)
     set relativenumber! number!
@@ -297,8 +293,6 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-
-
 
 if has("win32")
 source $VIMRUNTIME/delmenu.vim
@@ -338,6 +332,7 @@ nnoremap <leader>2 :set filetype=cpp<CR>
 nnoremap <leader>3 :set filetype=python<CR>
 nnoremap <leader>4 :set filetype=java<CR>
 
+"设置文件格式unix,dos,mac
 set fileformats=unix,dos,mac
 nmap <leader>fd :se fileformat=dos<CR>
 nmap <leader>fu :se fileformat=unix<CR>
@@ -355,7 +350,6 @@ map <C-x>n <ESC>:cn<CR>
 map <C-x>p <ESC>:cp<CR>
 map <C-x>c <ESC>:cc<CR>
 
-
 " 让 Tohtml 产生有 CSS 语法的 html
 " syntax/2html.vim，可以用:runtime! syntax/2html.vim
 let html_use_css=1
@@ -363,28 +357,32 @@ let html_use_css=1
 " Python 文件的一般设置，比如不要 tab 等
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-autocmd FileType python map <F10> :!ipython --pdb %<CR>
-"autocmd FileType python map <F11> :!python -m pdb %<CR>
-"autocmd FileType python map <F12> :!python %<CR>
+autocmd FileType python map <F10> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
+"autocmd FileType python map <F11> :!python -m pdb %<CR>  "pdb调试
+"autocmd FileType python map <F12> :!python %<CR>         "运行Python
 autocmd FileType python setlocal completeopt-=preview
 autocmd FileType python set omnifunc=pythoncomplete#Complete
+
 " for # indent, python文件中输入新行时#号注释不切回行首
 autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
 
 
 " 打开javascript折叠
 let b:javascript_fold=1
+
 " 打开javascript对dom、html和css的支持
 let javascript_enable_domhtmlcss=1
+
 " 设置字典 ~/.vim/dict/文件的路径
 autocmd filetype javascript set dictionary=$VIMFILES/dict/javascript.dict
 autocmd filetype css set dictionary=$VIMFILES/dict/css.dict
 autocmd filetype php set dictionary=$VIMFILES/dict/php.dict
 
+
 "-----------------------------------------------------------------
 " plugin - bufexplorer.vim Buffers切换
-" \be 全屏方式查看全部打开的文件列表
-" \bv 左右方式查看 \bs 上下方式查看
+" <leader>be 全屏方式查看全部打开的文件列表
+" <leader>bv 左右方式查看 <leader>bs 上下方式查看
 "-----------------------------------------------------------------
 
 "*********************************************************
@@ -433,7 +431,7 @@ Bundle "gregsexton/gitv"
 "配置默认的ycm_extra_conf.py
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' 
  
-"按,j 会跳转到定义
+"按<leader>yj 会跳转到定义
 nnoremap <leader>yj :YcmCompleter GoToDefinitionElseDeclaration<CR>   
  
 "打开vim时不再询问是否加载ycm_extra_conf.py配置
@@ -441,6 +439,7 @@ let g:ycm_confirm_extra_conf=0
  
 "使用ctags生成的tags文件
 let g:ycm_collect_identifiers_from_tag_files = 1
+
 " 补全功能在注释中同样有效  
 let g:ycm_complete_in_comments=1
 
@@ -452,19 +451,26 @@ let g:clang_use_library = 1
 
 " 开启 YCM 基于标签引擎  
 let g:ycm_collect_identifiers_from_tags_files=1
+
 " 引入 C++ 标准库tags，这个没有也没关系，只要.ycm_extra_conf.py文件中指定了正确的标准库路径  
-set tags+=/data/misc/software/misc./vim/stdcpp.tags  
+set tags+=/data/misc/software/misc./vim/stdcpp.tags
+
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键  
 inoremap <leader>y; <C-x><C-o>
+
 " 补全内容不以分割子窗口形式出现，只显示补全列表  
 set completeopt-=preview
+
 " 从第二个键入字符就开始罗列匹配项  
 let g:ycm_min_num_of_chars_for_completion=2
+
 " 禁止缓存匹配项，每次都重新生成匹配项  
 let g:ycm_cache_omnifunc=0
+
 " 语法关键字补全		     
 let g:ycm_seed_identifiers_with_syntax=1
-" 修改对C函数的补全快捷键，默认是CTRL + space，修改为CTRL + Shift + X;  
+
+" 修改对函数的补全快捷键，默认是CTRL + space，修改为CTRL + Shift + X;  
 let g:ycm_key_invoke_completion = '<C-S-x>'
 
 "This option controls the key mapping used to show the full diagnostic 
@@ -533,10 +539,10 @@ let g:ycm_open_loclist_on_ycm_diags = 1
 "inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " mapping
-inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"   " 回车即选中当前项
+inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"       " 回车即选中当前项
 "inoremap <expr> <C-J> pumvisible()?"\<PageDown>\<C-N>\<C-P>":"\<C-X><C-O>"
 "inoremap <expr> <C-K> pumvisible()?"\<PageUp>\<C-P>\<C-N>":"\<C-K>"
-inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>" 
+inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>"     " 关闭补全列表
 
 "-----------------------------------------------------------------
 " plugin - taglist.vim 查看函数列表，需要ctags程序
@@ -568,11 +574,11 @@ let Tlist_Show_Menu=1
 
 "-----------------------------------------------------------------
 " plugin - mark.vim 给各种tags标记不同的颜色，便于观看调式的插件。
-" \m mark or unmark the word under (or before) the cursor
-" \r manually input a regular expression. 用于搜索.
-" \n clear this mark (i.e. the mark under the cursor), or clear all highlighted marks .
-" \* 当前MarkWord的下一个 \# 当前MarkWord的上一个
-" \/ 所有MarkWords的下一个 \? 所有MarkWords的上一个
+" <leader>m mark or unmark the word under (or before) the cursor
+" <leader>r manually input a regular expression. 用于搜索.
+" <leader>n clear this mark (i.e. the mark under the cursor), or clear all highlighted marks .
+" <leader>* 当前MarkWord的下一个 \# 当前MarkWord的上一个
+" <leader>/ 所有MarkWords的下一个 \? 所有MarkWords的上一个
 "-----------------------------------------------------------------
 
 
@@ -609,7 +615,6 @@ let NERDTreeShowHidden=1
 let NERDTreeStatusline=0 
 let NERDChristmasTree=1 
 
-
 let g:NERDTree_title="[NERDTree]" 
   
 function! NERDTree_Start()  
@@ -621,8 +626,6 @@ function! NERDTree_IsValid()
 endfunction
 
 
-
-
 " F5 Quickfix窗口关闭
 map <F5> :ccl<CR>
 imap <F5> <ESC>:ccl<CR>
@@ -630,10 +633,10 @@ imap <F5> <ESC>:ccl<CR>
 
 "-----------------------------------------------------------------
 " plugin - NERD_commenter.vim 注释代码用的，
-" [count],cc 光标以下count行逐行添加注释(7,cc)
-" [count],cu 光标以下count行逐行取消注释(7,cu)
-" [count],cm 光标以下count行尝试添加块注释(7,cm)
-" ,cA 在行尾插入 /* */,并且进入插入模式。 这个命令方便写注释。
+" [count]<leader>cc 光标以下count行逐行添加注释(7,cc)
+" [count]<leader>cu 光标以下count行逐行取消注释(7,cu)
+" [count]<leader>cm 光标以下count行尝试添加块注释(7,cm)
+" <leader>cA 在行尾插入 /* */,并且进入插入模式。 这个命令方便写注释。
 " 注：count参数可选，无则默认为选中行或当前行
 "-----------------------------------------------------------------
 let NERDSpaceDelims=1 " 让注释符与语句之间留一个空格
@@ -728,6 +731,7 @@ let g:EasyGrepCommand = 0  " Use vimgrep:0, grepprg:1
 let g:EasyGrepRecursive  = 0 " Recursive searching
 let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
 let g:EasyGrepFilesToExclude = "*.bak, *~, cscope.*, *.a, *.o, *.pyc, *.bak"
+
 " F6 开始查找
 map <F6> :Grep 
 imap <F6> <ESC>:Grep 
@@ -735,7 +739,6 @@ imap <F6> <ESC>:Grep
 " F7 开始替换
 map <F7> :Replace 
 imap <F7> <ESC>:Replace  
-
 
 "C，C++ ,Java,Python按F8编译运行
 map <F8> :call CompileRunGcc()<CR>
@@ -757,7 +760,7 @@ func! CompileRunGcc()
 	endif
 endfunc
 
-"F9—C，C++ ,Python的调试
+"C，C++ ,Python的按F9调试
 map <F9> :call Rungdb()<CR>
 func! Rungdb()
 	exec "w"
@@ -772,7 +775,7 @@ func! Rungdb()
 	endif
 endfunc
 
-" 映射全选+复制 ctrl+a
+" 映射全选+复制 Ctrl+A
 map <C-A> ggVGY
 map! <C-A> <Esc>ggVGY
 
@@ -827,16 +830,19 @@ func SetTitle()
 	autocmd BufNewFile * normal G
 endfunc
 
+
 "F2-去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
+
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
-  
+
+
 " 新建tab  Ctrl+t
 nnoremap <C-t>     :tabnew<CR>
 inoremap <C-t>     <Esc>:tabnew<CR>
 
-" quickfix模式,逗号+空格—执行保存文件执行make命令
+" quickfix模式,<leader>+空格—执行保存文件执行make命令
 autocmd FileType c,cpp map <buffer> <leader>q<space> :w<cr>:make<cr>
 
 "-----------------------------------------------------------------
@@ -859,10 +865,12 @@ autocmd FileType c,cpp map <buffer> <leader>q<space> :w<cr>:make<cr>
 "-----------------------------------------------------------------
 " 开启/关闭对齐线
 nmap <leader>il :IndentLinesToggle<CR>
+
 let g:indentLine_concealcursor = 'vc' "(default 'inc')
 let g:indentLine_conceallevel = 1 "(default 2)
 "let g:indentLine_char = "┆"
 "let g:indentLine_first_char = "┆"
+
 
 "-----------------------------------------------------------------
 " 插件fholgado/minibufexpl.vim
@@ -873,6 +881,7 @@ let g:indentLine_conceallevel = 1 "(default 2)
 "let g:miniBufExplMapCTabSwitchBufs = 1 " 启用以下两个功能：Ctrl+tab移到下一个buffer并在当前窗口打开；Ctrl+Shift+tab移到上一个buffer并在当前窗口打开；ubuntu好像不支持
 "let g:miniBufExplMapCTabSwitchWindows = 1 " 启用以下两个功能：Ctrl+tab移到下一个窗口；Ctrl+Shift+tab移到上一个窗口；ubuntu好像不支持
 "let g:miniBufExplModSelTarget = 1    " 不要在不可编辑内容的窗口（如TagList窗口）中打开选中的buffer
+
 
 "解决FileExplorer窗口变小问题
 let g:miniBufExplForceSyntaxEnable = 1
