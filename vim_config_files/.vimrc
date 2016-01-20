@@ -28,7 +28,7 @@ colorscheme molokai " 设定配色方案
 
 " 文件修改之后自动载入
 set autoread
-" 启动的时候不显示那个援助索马里儿童的提示
+" 启动的时候不显示那个帮助可怜的乌干达儿童的提示
 set shortmess=atI
 
 set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
