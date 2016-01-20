@@ -104,8 +104,8 @@ set selectmode=mouse,key
 
 " 相对行号: 行号变成相对，可以用 nj/nk 进行跳转
 "set relativenumber number
-"au FocusLost * :set norelativenumber number
-"au FocusGained * :set relativenumber
+au FocusLost * :set norelativenumber number
+au FocusGained * :set relativenumber
 
 " 插入模式下用绝对行号, 普通模式下用相对
 autocmd InsertEnter * :set norelativenumber number
@@ -174,8 +174,8 @@ noremap L $    "L一行最后一个字符处
 nnoremap ; :
 
 " 搜索相关
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search) 通模式下 “空格”查找
-map <space> /
+" Map <leader>' to / (search) and Ctrl-<Space> to ? (backwards search) 通模式下 “空格”查找
+map <leader>' /
 " 进入搜索Use sane regexes"
 nnoremap / /\v
 vnoremap / /\v
@@ -910,8 +910,8 @@ nmap <C-F> :bd<CR>
 
 
 " buffer 切换快捷键，默认方向键左右可以切换buffer 
-map <C-N> :MBEbn<cr>  
-map <C-H> :MBEbp<cr>
+map <C-K> :MBEbn<cr>  
+map <C-J> :MBEbp<cr>
 
 "-----------------------------------------------------------------
 " davidhalter/jedi-vim'
