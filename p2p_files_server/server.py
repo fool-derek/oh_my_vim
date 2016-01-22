@@ -10,6 +10,7 @@ from xmlrpclib import ServerProxy, Fault
 from os.path import join, abspath, isfile
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from urlparse import urlparse
+from os import listdir
 import sys
 
 SimpleXMLRPCServer.allow_reuse_address = 1
@@ -18,6 +19,7 @@ MAX_HISTORY_LENGTH = 6
 
 UNHANDLED = 100
 ACCESS_DENIED = 200
+FINISH_LIST_FILES = 300
 
 class UnhandledQuery(Fault):
     """
@@ -25,6 +27,13 @@ class UnhandledQuery(Fault):
     """
     def __init__(self, message = "Couldn't handle the query"):
         Fault.__init__(self, UNHANDLED, message)
+
+class FinishListFiles(Fault):
+    """
+    表示当前主机文件已经查询完成的查询的标志。
+    """
+    def __init__(self, message = "Finish list all access files!"):
+        Fault.__init__(self, FINISH_LIST_FILES, message)
 
 class AccessDenied(Fault):
     """
@@ -62,17 +71,31 @@ class Node:
         查询文件，可能会向其他已知节点请求帮助。将文件作为字符串返回。
         """
         try:
-            return self._handle(query)
+            return self._query_handle(query)
         except UnhandledQuery:
             history = history + [self.url]
             if len(history) >= MAX_HISTORY_LENGTH:raise
-            return self._broadcast(query, history)
+            return self._query_broadcast(query, history)
+
+    def listfiles(self, file_list_list = [], history = []):
+        """
+        列出可以查询的文件，可能会向其他已知节点请求帮助。
+        """
+        try:
+            file_list_list = file_list_list + self._list_handle()
+            raise FinishListFiles
+        except FinishListFiles:
+            history = history + [self.url]
+            if len(history) >= MAX_HISTORY_LENGTH:
+                raise
+            return self._list_broadcast(file_list_list, history)
 
     def hello(self, other):
         """
         用于将节点介绍给其他节点。
         """
         self.konwn.add(other)
+        print self.konwn
         return 0
 
     def fetch(self, query, secret):
@@ -87,6 +110,17 @@ class Node:
         f.close()
         return 0
 
+    def list_file(self, secret):
+        """
+        用于让节点找到文件并且下载。
+        """
+        if secret != self.secret:
+            raise AccessDenied
+        all_files_list = self.listfiles()
+        for file_name in all_files_list:
+            print file_name
+        return 0
+
     def _start(self):
         """
         内部使用,以启动XML_RPC服务器。
@@ -96,7 +130,7 @@ class Node:
         s.register_instance(self)
         s.serve_forever()
 
-    def _handle(self, query):
+    def _query_handle(self, query):
         """
         内部使用,用于处理请求。
         """
@@ -107,7 +141,8 @@ class Node:
         if not inside(dir, name):
             raise AccessDenied
         return open(name).read()
-    def _broadcast(self, query, history):
+
+    def _query_broadcast(self, query, history):
         """
         内部使用，用于将查询广播到所有已知节点。
         """
@@ -125,6 +160,38 @@ class Node:
             except:
                 self.konwn.remove()
         raise UnhandledQuery
+
+    def _list_handle(self):
+        """
+        内部使用,用于处理列出本地文件请求。
+        """
+        files = listdir(self.dirname)
+        if files:
+            files_list = ['-----------' + self.url + '-----------'] + files
+            #  print '_list_handle runing...'
+            return files_list
+        else:
+            return None
+
+    def _list_broadcast(self, file_list_list, history):
+        """
+        内部使用，用于将列出文件广播到所有已知节点。
+        """
+        for other in self.konwn.copy():
+            if other in history:
+                continue
+            try:
+                s = ServerProxy(other)
+                #  print '_list_broadcast runing...'
+                return s.listfiles(file_list_list, history)
+            except Fault, f:
+                if f.faultCode == FINISH_LIST_FILES:
+                    pass
+                else:
+                    self.konwn.remove(other)
+            except:
+                self.konwn.remove()
+        return file_list_list
 def main():
     url, directory, secret = sys.argv[1:]
     n = Node(url, directory, secret)

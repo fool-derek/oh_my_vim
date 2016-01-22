@@ -62,6 +62,19 @@ class Client(Cmd):
                 raise
             print "Couldn't find the file", arg
 
+    def do_list(self, arg):
+        """
+        调用服务器的list_file方法。
+        """
+        try:
+            #  print "call do_list..."
+            self.server.list_file(self.secret)
+        except Fault, f:
+            #  if f.faultCode != UNHANDLED:
+                #  raise
+            #  print "Couldn't find any file"
+            pass
+
     def do_exit(self, arg):
         """
         退出程序。
