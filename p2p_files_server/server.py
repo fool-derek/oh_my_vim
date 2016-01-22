@@ -87,7 +87,8 @@ class Node:
         except FinishListFiles:
             history = history + [self.url]
             if len(history) >= MAX_HISTORY_LENGTH:
-                raise
+                return file_list_list, history
+            print file_list_list
             return self._list_broadcast(file_list_list, history)
 
     def hello(self, other):
@@ -95,7 +96,7 @@ class Node:
         用于将节点介绍给其他节点。
         """
         self.konwn.add(other)
-        print self.konwn
+        #  print self.konwn
         return 0
 
     def fetch(self, query, secret):
@@ -116,7 +117,7 @@ class Node:
         """
         if secret != self.secret:
             raise AccessDenied
-        all_files_list = self.listfiles()
+        all_files_list, visted_node= self.listfiles()
         for file_name in all_files_list:
             print file_name
         return 0
@@ -182,8 +183,14 @@ class Node:
                 continue
             try:
                 s = ServerProxy(other)
-                #  print '_list_broadcast runing...'
-                return s.listfiles(file_list_list, history)
+                print '_list_broadcast runing...'
+                returned_files_list, returned_history = s.listfiles(file_list_list, history)
+                print returned_files_list, returned_history
+                if other == self.konwn.copy()[-1]:
+                    return returned_files_list
+                else:
+                    file_list_list = file_list_list + returned_files_list
+                    history = history + returned_history
             except Fault, f:
                 if f.faultCode == FINISH_LIST_FILES:
                     pass
@@ -191,7 +198,7 @@ class Node:
                     self.konwn.remove(other)
             except:
                 self.konwn.remove()
-        return file_list_list
+        return file_list_list, history
 def main():
     url, directory, secret = sys.argv[1:]
     n = Node(url, directory, secret)

@@ -10,7 +10,7 @@ from xmlrpclib import ServerProxy, Fault
 from cmd import Cmd
 from random import choice
 from string import lowercase
-from server import Node, UNHANDLED
+from server import Node, UNHANDLED, FINISH_LIST_FILES
 from threading import Thread
 from time import sleep
 import sys
@@ -70,10 +70,10 @@ class Client(Cmd):
             #  print "call do_list..."
             self.server.list_file(self.secret)
         except Fault, f:
-            #  if f.faultCode != UNHANDLED:
-                #  raise
-            #  print "Couldn't find any file"
-            pass
+            #  print "do_list_fault"
+            if f.faultCode != FINISH_LIST_FILES:
+                raise
+            print "Finish list all access files!"
 
     def do_exit(self, arg):
         """
