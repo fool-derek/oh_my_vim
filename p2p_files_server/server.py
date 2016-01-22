@@ -88,7 +88,7 @@ class Node:
             history = history + [self.url]
             if len(history) >= MAX_HISTORY_LENGTH:
                 return file_list_list, history
-            print file_list_list
+            #  print file_list_list
             return self._list_broadcast(file_list_list, history)
 
     def hello(self, other):
@@ -183,9 +183,9 @@ class Node:
                 continue
             try:
                 s = ServerProxy(other)
-                print '_list_broadcast runing...'
+                #  print '_list_broadcast runing...'
                 returned_files_list, returned_history = s.listfiles(file_list_list, history)
-                print returned_files_list, returned_history
+                #  print returned_files_list, returned_history
                 if other == self.konwn.copy()[-1]:
                     return returned_files_list
                 else:
