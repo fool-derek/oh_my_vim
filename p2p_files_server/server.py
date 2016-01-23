@@ -186,7 +186,8 @@ class Node:
                 s = ServerProxy(other)
                 returned_files_data = s.listfiles(file_list_list, history)
                 file_list_list = returned_files_data[0]
-                history = history + returned_files_data[1]
+                history = returned_files_data[1]
+                #  print history
             except Fault, f:
                 if f.faultCode == FINISH_LIST_FILES:
                     pass
