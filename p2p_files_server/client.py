@@ -33,7 +33,7 @@ class Client(Cmd):
     """
     Node类的简单的基于文本的界面。
     """
-    prompt = '> '
+    prompt = '~>: '
     def __init__(self, url, dirname, urlfile):
         """
         设定url、dirname和urlfile，并且在单独的线程中启动Node服务器。
