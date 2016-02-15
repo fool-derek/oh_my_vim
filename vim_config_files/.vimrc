@@ -39,9 +39,9 @@ set background=dark "设置背景色
 set number " 显示行号
 "设置在vim中可以使用鼠标
 "set mouse=a " 鼠标暂不启用, 键盘党....
-"set cursorline " 突出显示当前行
+set cursorline " 突出显示当前行
 "set cursorcolumn " 突出显示当前列
-"set scrolloff=7 " 在上下移动光标时，光标的上方或下方至少会保留显示的行数
+set scrolloff=7 " 在上下移动光标时，光标的上方或下方至少会保留显示的行数
 set noswapfile " 关闭交换文件
 set autowrite   "自动保存
 set ruler " 打开状态栏标尺
