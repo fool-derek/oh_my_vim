@@ -446,6 +446,14 @@ func SetTitle()
 		call append(line(".")+5, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+6, "\#########################################################################")
 		call append(line(".")+7, "") 
+	elseif &filetype == 'java' 
+		call setline(1, "/*************************************************************************") 
+		call append(line("."), "    * @File Name: ".expand("%")) 
+		call append(line(".")+1, "    * @Author: 陈昌栋") 
+		call append(line(".")+2, "    * @Mail: ccdaccd@163.com ") 
+		call append(line(".")+3, "    * @Created Time: ".strftime("%c")) 
+		call append(line(".")+4, " ************************************************************************/") 
+		call append(line(".")+5, "")
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "    > File Name: ".expand("%")) 
@@ -453,16 +461,15 @@ func SetTitle()
 		call append(line(".")+2, "    > Mail: ccdaccd@163.com ") 
 		call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
-		call append(line(".")+5, "")
 	endif
 	if &filetype == 'cpp'
-		call append(line(".")+6, "#include<iostream>")
-		call append(line(".")+7, "using namespace std;")
-		call append(line(".")+8, "")
+		call append(line(".")+5, "#include<iostream>")
+		call append(line(".")+6, "using namespace std;")
+		call append(line(".")+7, "")
 	endif
 	if &filetype == 'c'
-		call append(line(".")+6, "#include<stdio.h>")
-		call append(line(".")+7, "")
+		call append(line(".")+5, "#include<stdio.h>")
+		call append(line(".")+6, "")
 	endif
 	"新建文件后，自动定位到文件末尾
 	autocmd BufNewFile * normal G
