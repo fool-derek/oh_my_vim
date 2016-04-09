@@ -479,11 +479,11 @@ endfunc
 map <C-A> ggVGY
 map! <C-A> <Esc>ggVGY
 
-"Ctrl+M b-去空行  
-nnoremap <C-M>b :g/^\s*$/d<CR> 
+"Ctrl+C b-去空行  
+nnoremap <C-c>b :g/^\s*$/d<CR> 
 
-"Ctrl+M c比较文件  
-nnoremap <C-M>c :vert diffsplit 
+"Ctrl+C c比较文件  
+nnoremap <C-c>c :vert diffsplit 
 
 " 新建Tab, Ctrl+T
 nnoremap <C-T> :tabnew<CR>
@@ -614,9 +614,9 @@ function! NERDTree_IsValid()
 endfunction
 
 
-" Ctrl+m q Quickfix窗口关闭
-map <C-M>q :ccl<CR>
-imap <C-M>q <ESC>:ccl<CR>
+" Ctrl+C q Quickfix窗口关闭
+map <C-c>q :ccl<CR>
+imap <C-c>q <ESC>:ccl<CR>
 
 
 "*****************************************************
@@ -690,13 +690,13 @@ let g:EasyGrepRecursive  = 0 " Recursive searching
 let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
 let g:EasyGrepFilesToExclude = "*.bak, *~, cscope.*, *.a, *.o, *.pyc, *.bak"
 
-" Ctrl+M f 开始查找
-map <C-M>f :Grep 
-imap <C-M>f <ESC>:Grep 
+" Ctrl+C f 开始查找
+map <C-c>f :Grep 
+imap <C-c>f <ESC>:Grep 
 
-" Ctrl+M r 开始替换
-map <C-M>r :Replace 
-imap <C-M>r <ESC>:Replace  
+" Ctrl+C r 开始替换
+map <C-c>r :Replace 
+imap <C-c>r <ESC>:Replace  
 
 " quickfix模式,<leader>+空格—执行保存文件执行make命令
 autocmd FileType c,cpp map <buffer> <leader>q<space> :w<cr>:make<cr>
@@ -960,11 +960,11 @@ let NERDCompactSexyComs=1 " 多行注释时样子更好看
 " -----------------------------------------------------------------------------
 "  < SrcExpl 插件配置 > 增强源代码浏览，其功能就像Windows中的"Source Insight"
 " -----------------------------------------------------------------------------
-nmap <C-m>s :SrcExplToggle<CR>                "打开/闭浏览窗口
-let g:SrcExpl_jumpKey = "<C-m><ENTER>" 
-let g:SrcExpl_gobackKey = "<C-m><SPACE>"
-let g:SrcExpl_prevDefKey = "<C-m><F3>" 
-let g:SrcExpl_nextDefKey = "<C-m><F4>" 
+nmap <C-c>s :SrcExplToggle<CR>                "打开/闭浏览窗口
+let g:SrcExpl_jumpKey = "<C-c><ENTER>" 
+let g:SrcExpl_gobackKey = "<C-c><SPACE>"
+let g:SrcExpl_prevDefKey = "<C-c><F3>" 
+let g:SrcExpl_nextDefKey = "<C-c><F4>" 
 
 
 " -----------------------------------------------------------------------------
