@@ -137,20 +137,20 @@ nnoremap <leader>lh :call HideNumber()<CR>
 "-------------------操作相关开始--------------------
 "使用Ctrl+Z保存
 imap <C-Z> <C-O>:update<CR>
-vmap <C-Z> <C-O>:update<CR>
+vmap <C-Z> <C-c>:update<CR>
 nmap <C-Z> :update<CR>
 
 "使用Ctrl+B撤回
 imap <C-B> <C-O>:u<CR>
-vmap <C-B> <C-O>:u<CR>
+vmap <C-B> <C-c>:u<CR>
 nmap <C-B> :u<CR>
 
 " <leader>s 语法开关，关闭语法可以加快大文件的展示
 nnoremap <leader>s :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 " Go to home and end using capitalized directions
-noremap H ^    " H一行第一个字符处
-noremap L $    "L一行最后一个字符处
+noremap T ^    " H一行第一个字符处
+noremap t $    "L一行最后一个字符处
 
 " Map ; to : and save a million keystrokes 用于快速进入命令行
 nnoremap ; :
@@ -381,7 +381,7 @@ autocmd filetype php set dictionary=$VIMFILES/dict/php.dict
 
 "-------------------编译运行快捷键设置开始--------------------
 
-"C，C++ ,Java,Python按F8编译运行
+"C，C++ ,Java,Python按F1编译运行
 map <F1> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
@@ -763,7 +763,7 @@ hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
 
 "使用Ctrl+D关闭Buffer中的一个文件
 imap <C-D> <C-O>:bd<CR>
-vmap <C-D> <C-O>:bd<CR>
+vmap <C-D> <C-c>:bd<CR>
 nmap <C-D> :bd<CR>
 
 
@@ -864,7 +864,7 @@ let g:ycm_key_list_previous_completion = ['<Up>']
 " 设置转到定义处的快捷键为CTRL + J，这个功能非常赞  
 nmap <C-J> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
 imap <C-J> <C-O>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
-vmap <C-J> <C-O>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+vmap <C-J> <C-c>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
 
 " SirVer/ultisnips 代码片断
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
