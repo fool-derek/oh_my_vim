@@ -168,7 +168,7 @@ map Y y$
 vnoremap <leader>p "+y
 
 " select all 全选
-map <Leader>a ggVG"
+map <leader>a ggVG"
 
 " select block 选择块
 nnoremap <leader>v V`}
@@ -401,7 +401,7 @@ func! CompileRunGcc()
 	endif
 endfunc
 
-"C，C++ ,Python的按F9调试
+"C，C++ ,Python的按F2调试
 map <F2> :call Rungdb()<CR>
 func! Rungdb()
 	exec "w"
@@ -982,7 +982,7 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <Leader>z :ZoomToggle<CR>   "<leader>z 触发放大 (没有作用)
+nnoremap <silent> <leader>z :ZoomToggle<CR>   "<leader>z 触发放大 (没有作用)
 
 
 "#######################内部的配置未使用#########################
