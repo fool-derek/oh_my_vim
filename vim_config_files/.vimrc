@@ -197,10 +197,10 @@ map tc :tabclose<CR>
 "nnoremap <C-l> <C-w>l
 
 " use Ctrl+[l|n|p|cc] to list|next|previous|jump to count the result
-map <C-x>l <ESC>:cl<CR>
-map <C-x>n <ESC>:cn<CR>
-map <C-x>p <ESC>:cp<CR>
-map <C-x>c <ESC>:cc<CR>
+"map <C-x>l <ESC>:cl<CR>
+"map <C-x>n <ESC>:cn<CR>
+"map <C-x>p <ESC>:cp<CR>
+"map <C-x>c <ESC>:cc<CR>
 "-------------------操作相关结束--------------------
 
 
@@ -353,7 +353,7 @@ let html_use_css=1
 " Python 文件的一般设置，比如不要 tab 等
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-autocmd FileType python map <F10> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
+autocmd FileType python map <F5> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
 
 "autocmd FileType python map <F11> :!python -m pdb %<CR>  "pdb调试
 "autocmd FileType python map <F12> :!python %<CR>         "运行Python
@@ -382,7 +382,7 @@ autocmd filetype php set dictionary=$VIMFILES/dict/php.dict
 "-------------------编译运行快捷键设置开始--------------------
 
 "C，C++ ,Java,Python按F8编译运行
-map <F8> :call CompileRunGcc()<CR>
+map <F1> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
@@ -402,7 +402,7 @@ func! CompileRunGcc()
 endfunc
 
 "C，C++ ,Python的按F9调试
-map <F9> :call Rungdb()<CR>
+map <F2> :call Rungdb()<CR>
 func! Rungdb()
 	exec "w"
 	if &filetype == 'c'
@@ -479,15 +479,15 @@ endfunc
 map <C-A> ggVGY
 map! <C-A> <Esc>ggVGY
 
-"F2-去空行  
-nnoremap <F2> :g/^\s*$/d<CR> 
+"Ctrl+M b-去空行  
+nnoremap <C-M>b :g/^\s*$/d<CR> 
 
-"比较文件  
-nnoremap <C-F2> :vert diffsplit 
+"Ctrl+M c比较文件  
+nnoremap <C-M>c :vert diffsplit 
 
-" 新建tab  Ctrl+t
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-t>     <Esc>:tabnew<CR>
+" 新建Tab, Ctrl+T
+nnoremap <C-T> :tabnew<CR>
+inoremap <C-T> <Esc>:tabnew<CR>
 
 "-------------------编译运行设置结束--------------------
 
@@ -614,9 +614,9 @@ function! NERDTree_IsValid()
 endfunction
 
 
-" F5 Quickfix窗口关闭
-map <F5> :ccl<CR>
-imap <F5> <ESC>:ccl<CR>
+" Ctrl+m q Quickfix窗口关闭
+map <C-M>q :ccl<CR>
+imap <C-M>q <ESC>:ccl<CR>
 
 
 "*****************************************************
@@ -674,7 +674,7 @@ let g:jedi#documentation_command = "K"
 "Usages <leader>ju (shows all the usages of a name)
 let g:jedi#usages_command = "<leader>ju"
 
-let g:jedi#completions_command = "<C-S-x>" "Completion
+let g:jedi#completions_command = "<C-X>" "Completion
 
 "Renaming
 let g:jedi#rename_command = "<leader>jr"
@@ -690,13 +690,13 @@ let g:EasyGrepRecursive  = 0 " Recursive searching
 let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
 let g:EasyGrepFilesToExclude = "*.bak, *~, cscope.*, *.a, *.o, *.pyc, *.bak"
 
-" F6 开始查找
-map <F6> :Grep 
-imap <F6> <ESC>:Grep 
+" Ctrl+M f 开始查找
+map <C-M>f :Grep 
+imap <C-M>f <ESC>:Grep 
 
-" F7 开始替换
-map <F7> :Replace 
-imap <F7> <ESC>:Replace  
+" Ctrl+M r 开始替换
+map <C-M>r :Replace 
+imap <C-M>r <ESC>:Replace  
 
 " quickfix模式,<leader>+空格—执行保存文件执行make命令
 autocmd FileType c,cpp map <buffer> <leader>q<space> :w<cr>:make<cr>
@@ -761,15 +761,15 @@ hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
 hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
 
 
-"使用Ctrl+F关闭Buffer中的一个文件
-imap <C-F> <C-O>:bd<CR>
-vmap <C-F> <C-O>:bd<CR>
-nmap <C-F> :bd<CR>
+"使用Ctrl+D关闭Buffer中的一个文件
+imap <C-D> <C-O>:bd<CR>
+vmap <C-D> <C-O>:bd<CR>
+nmap <C-D> :bd<CR>
 
 
 " buffer 切换快捷键，默认方向键左右可以切换buffer 
-map <C-K> :MBEbn<cr>  
-map <C-J> :MBEbp<cr>
+map <C-H> :MBEbn<cr>  
+map <C-L> :MBEbp<cr>
 
 
 
@@ -805,7 +805,7 @@ let g:ycm_collect_identifiers_from_tags_files=1
 set tags+=/data/misc/software/misc./vim/stdcpp.tags
 
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键  
-inoremap <leader>y; <C-x><C-o>
+inoremap <leader>yc <C-x><C-o>
 
 " 补全内容不以分割子窗口形式出现，只显示补全列表  
 set completeopt-=preview
@@ -819,8 +819,8 @@ let g:ycm_cache_omnifunc=0
 " 语法关键字补全		     
 let g:ycm_seed_identifiers_with_syntax=1
 
-" 修改对函数的补全快捷键，默认是CTRL + space，修改为CTRL + Shift + X;  
-let g:ycm_key_invoke_completion = '<C-S-x>'
+" 修改对函数的补全快捷键，默认是CTRL + space，修改为CTRL + X;  
+let g:ycm_key_invoke_completion = '<C-X>'
 
 "This option controls the key mapping used to show the full diagnostic 
 "text when the user's cursor is on the line with the diagnostic.
@@ -861,10 +861,10 @@ let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 
 
-" 设置转到定义处的快捷键为CTRL + L，这个功能非常赞  
-nmap <C-l> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
-imap <C-l> <C-O>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
-vmap <C-l> <C-O>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+" 设置转到定义处的快捷键为CTRL + J，这个功能非常赞  
+nmap <C-J> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+imap <C-J> <C-O>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+vmap <C-J> <C-O>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
 
 " SirVer/ultisnips 代码片断
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -897,10 +897,12 @@ inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>"     " 关闭补全列表
 " -----------------------------------------------------------------------------
 "  < vim-javacomplete2（也就是 javacomplete）插件配置 > java 补全插件
 " -----------------------------------------------------------------------------
-setlocal omnifunc=javacomplete#Complete
-autocmd FileType java set omnifunc=javacomplete#Complete
-autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
+"setlocal omnifunc=javacomplete#Complete
+"autocmd FileType java set omnifunc=javacomplete#Complete
+"autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
 
+autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
+autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInf "参数补全
 
 " -----------------------------------------------------------------------------
 "  < vim-javacompleteex（也就是 javacomplete 增强版）插件配置 > java 补全插件
