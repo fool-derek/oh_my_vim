@@ -261,6 +261,7 @@ let helptags=$VIMFILES.'/doc'
 " 设置字体 以及中文支持
 if has("win32")
 "set guifont=Inconsolata:h11:cANSI
+"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12:cANSI
 set guifont=DejaVu\ Sans\ Mono:h12:cANSI
 "set gfw=微软雅黑:h12:cANSI
 endif
@@ -353,7 +354,7 @@ let html_use_css=1
 " Python 文件的一般设置，比如不要 tab 等
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-autocmd FileType python map <F5> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
+autocmd FileType python map <F7> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
 
 "autocmd FileType python map <F11> :!python -m pdb %<CR>  "pdb调试
 "autocmd FileType python map <F12> :!python %<CR>         "运行Python
@@ -381,8 +382,8 @@ autocmd filetype php set dictionary=$VIMFILES/dict/php.dict
 
 "-------------------编译运行快捷键设置开始--------------------
 
-"C，C++ ,Java,Python按F1编译运行
-map <F1> :call CompileRunGcc()<CR>
+"C，C++ ,Java,Python按F5编译运行
+map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
@@ -401,8 +402,8 @@ func! CompileRunGcc()
 	endif
 endfunc
 
-"C，C++ ,Python的按F2调试
-map <F2> :call Rungdb()<CR>
+"C，C++ ,Python的按F6调试
+map <F6> :call Rungdb()<CR>
 func! Rungdb()
 	exec "w"
 	if &filetype == 'c'
@@ -464,12 +465,12 @@ func SetTitle()
 		call append(line(".")+4, " ************************************************************************/") 
 	endif
 	if &filetype == 'cpp'
-		call append(line(".")+5, "#include<iostream>")
+		call append(line(".")+5, "#include <iostream>")
 		call append(line(".")+6, "using namespace std;")
 		call append(line(".")+7, "")
 	endif
 	if &filetype == 'c'
-		call append(line(".")+5, "#include<stdio.h>")
+		call append(line(".")+5, "#include <stdio.h>")
 		call append(line(".")+6, "")
 	endif
 	if &filetype == 'java'
