@@ -892,8 +892,6 @@ vmap <C-J> <C-c>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword
 "定义存放代码片段的文件夹，使用自定义和默认的，将会的到全局，有冲突的会提示
 "let g:UltiSnipsSnippetDirectories=["bundle/vim-snippets/UltiSnips"]
 
-
-let g:EclimCompletionMethod = 'omnifunc'
 let g:ycm_filepath_completion_use_working_dir = 1
 "let g:ycm_use_ultisnips_completer = 1
 let g:ycm_disable_for_files_larger_than_kb = 0
@@ -918,7 +916,38 @@ inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>"     " 关闭补全列表
 "autocmd FileType java set omnifunc=javacomplete#Complete
 "autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
 
-autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
+
+
+" vim-javacomplete2
+" java的omni全能补全(insert模式下ctrl-x-ctrl-o调用),ycm将会自动调用
+" 与eclim的自动补全冲突,所以先判断当前文件是否是项目文件
+" 如果不是项目文件才使用vim-javacomplete2进行全能补全
+function! IsProjectFile()
+    let projectName = eclim#project#util#GetCurrentProjectName()
+    if projectName == ''
+         setlocal omnifunc=javacomplete#Complete
+    endif
+endfunction
+autocmd FileType java call IsProjectFile()
+
+" eclim/eclimd
+" 需要自行安装,不在vim-plug插件管理器管理列表之中
+" eclimd读取$ECLIPSE_HOME/configuration/config.ini
+" 还读取~/eclimrc配置文件
+" 日志级别,日志文件默认在workspace/eclimd.log
+" 除了默认的info,还有trace,debug,warning,error,off
+let g:EclimLogLevel = 'info'
+" 设置浏览器,Firefox,mozilla,opera,iexplore
+let g:EclimBrowser = 'firefox'
+" 让eclim配合ycm实现java等语言的自动补全
+" 编辑的文件必须是eclipse的一个项目中的文件才会自动补全
+" 这个变量的作用是(仅举例java文件):set omnifunc=eclim#java#complete#CodeComplete
+let g:EclimCompletionMethod = 'omnifunc'
+
+
+
+
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
 autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInf "参数补全
 
 " -----------------------------------------------------------------------------
