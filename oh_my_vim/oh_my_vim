@@ -639,11 +639,21 @@ imap <C-c>q <ESC>:ccl<CR>
 "*****************************************************
 "		  Syntastic配置						 *
 "*****************************************************
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_error_symbol = 'e!'  "set error or warning signs
 let g:syntastic_warning_symbol = 'w!'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_python_checkers=['pyflakes']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+
+"syntastic 保存检查代码时候传入参数  
+let g:syntastic_java_javac_args="-cp ../../lib:../../bin -sourcepath ../../bin -Djava.ext.dirs=../../lib -d ../../bin"
+
 set path=.,/forLinux/linux-2.6.30.4/include
 set path+=/forLinux/linux-2.6.30.4/include/uapi
 set path+=/forLinux/linux-2.6.30.4/include/asm-generic
@@ -866,6 +876,7 @@ let g:ycm_semantic_triggers =  {
   \   'objc' : ['->', '.'],
   \   'ocaml' : ['.', '#'],
   \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'java' : ['->', '.', '::'],
   \   'perl' : ['->'],
   \   'php' : ['->', '::'],
   \   'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb,elixir,go' : ['.'],
@@ -925,26 +936,25 @@ inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>"     " 关闭补全列表
 function! IsProjectFile()
     let projectName = eclim#project#util#GetCurrentProjectName()
     if projectName == ''
-         setlocal omnifunc=javacomplete#Complete
+    	setlocal omnifunc=javacomplete#Complete
+    else
+        let g:EclimCompletionMethod = 'omnifunc'
+        " eclim/eclimd
+        " 需要自行安装,不在vim-plug插件管理器管理列表之中
+        " eclimd读取$ECLIPSE_HOME/configuration/config.ini
+        " 还读取~/eclimrc配置文件
+        " 日志级别,日志文件默认在workspace/eclimd.log
+        " 除了默认的info,还有trace,debug,warning,error,off
+        let g:EclimLogLevel = 'info'
+        " 设置浏览器,Firefox,mozilla,opera,iexplore
+        let g:EclimBrowser = 'chromium'
+        " 让eclim配合ycm实现java等语言的自动补全
+        " 编辑的文件必须是eclipse的一个项目中的文件才会自动补全
+        " 这个变量的作用是(仅举例java文件):set omnifunc=eclim#java#complete#CodeComplete
     endif
 endfunction
 autocmd FileType java call IsProjectFile()
-
-" eclim/eclimd
-" 需要自行安装,不在vim-plug插件管理器管理列表之中
-" eclimd读取$ECLIPSE_HOME/configuration/config.ini
-" 还读取~/eclimrc配置文件
-" 日志级别,日志文件默认在workspace/eclimd.log
-" 除了默认的info,还有trace,debug,warning,error,off
-let g:EclimLogLevel = 'info'
-" 设置浏览器,Firefox,mozilla,opera,iexplore
-let g:EclimBrowser = 'firefox'
-" 让eclim配合ycm实现java等语言的自动补全
-" 编辑的文件必须是eclipse的一个项目中的文件才会自动补全
-" 这个变量的作用是(仅举例java文件):set omnifunc=eclim#java#complete#CodeComplete
-let g:EclimCompletionMethod = 'omnifunc'
-
-
+let g:EclimFileTypeValidate = 0
 
 
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
