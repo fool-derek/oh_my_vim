@@ -954,7 +954,7 @@ function! IsProjectFile()
     endif
 endfunction
 autocmd FileType java call IsProjectFile()
-let g:EclimFileTypeValidate = 0
+let g:EclimFileTypeValidate = 0 "可以启用Syntastic语法检查功能
 
 
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
