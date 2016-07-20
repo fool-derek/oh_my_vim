@@ -927,38 +927,25 @@ inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>"     " 关闭补全列表
 "autocmd FileType java set omnifunc=javacomplete#Complete
 "autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
 
-
-
-" vim-javacomplete2
-" java的omni全能补全(insert模式下ctrl-x-ctrl-o调用),ycm将会自动调用
-" 与eclim的自动补全冲突,所以先判断当前文件是否是项目文件
-" 如果不是项目文件才使用vim-javacomplete2进行全能补全
-function! IsProjectFile()
-    let projectName = eclim#project#util#GetCurrentProjectName()
-    if projectName == ''
-    	setlocal omnifunc=javacomplete#Complete
-    else
-        let g:EclimCompletionMethod = 'omnifunc'
-        " eclim/eclimd
-        " 需要自行安装,不在vim-plug插件管理器管理列表之中
-        " eclimd读取$ECLIPSE_HOME/configuration/config.ini
-        " 还读取~/eclimrc配置文件
-        " 日志级别,日志文件默认在workspace/eclimd.log
-        " 除了默认的info,还有trace,debug,warning,error,off
-        let g:EclimLogLevel = 'info'
-        " 设置浏览器,Firefox,mozilla,opera,iexplore
-        let g:EclimBrowser = 'chromium'
-        " 让eclim配合ycm实现java等语言的自动补全
-        " 编辑的文件必须是eclipse的一个项目中的文件才会自动补全
-        " 这个变量的作用是(仅举例java文件):set omnifunc=eclim#java#complete#CodeComplete
-    endif
-endfunction
-"autocmd FileType java call IsProjectFile()
-let g:EclimFileTypeValidate = 0 "可以启用Syntastic语法检查功能
-
-
 autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
 autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInf "参数补全
+
+" -----------------------------------------------------------------------------
+"  < Eclim插件配置 > java 补全插件
+" -----------------------------------------------------------------------------
+
+" 日志级别,日志文件默认在workspace/eclimd.log
+" 除了默认的info,还有trace,debug,warning,error,off
+let g:EclimLogLevel = 'info'
+" 设置浏览器,firefox,mozilla,opera,iexplore
+let g:EclimBrowser = 'firefox'
+" 让eclim配合ycm实现java等语言的自动补全
+" 编辑的文件必须是eclipse的一个项目中的文件才会自动补全
+" 这个变量的作用是(仅举例java文件):set omnifunc=eclim#java#complete#CodeComplete
+"let g:EclimCompletionMethod = 'omnifunc'
+let g:EclimPythonValidate = 0
+let g:EclimCppValidate = 0
+let g:EclimFileTypeValidate = 0 "可以启用Syntastic语法检查功能
 
 " -----------------------------------------------------------------------------
 "  < vim-javacompleteex（也就是 javacomplete 增强版）插件配置 > java 补全插件
