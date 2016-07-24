@@ -651,8 +651,8 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 
-"syntastic 保存检查代码时候传入参数  
-let g:syntastic_java_javac_args="-cp ../../lib:../../bin -sourcepath ../../bin -Djava.ext.dirs=../../lib -d ../../bin"
+"syntastic 保存检查代码时引入第三方库的语法检查,这个设置还有待考证，如果开启会导致多级目录syntastic失效
+"let g:syntastic_java_javac_args="-cp ../../lib:../../bin -sourcepath ../../bin -Djava.ext.dirs=../../lib -d ../../bin"
 
 set path=.,/forLinux/linux-2.6.30.4/include
 set path+=/forLinux/linux-2.6.30.4/include/uapi
