@@ -145,8 +145,8 @@ imap <C-B> <C-O>:u<CR>
 vmap <C-B> <C-c>:u<CR>
 nmap <C-B> :u<CR>
 
-" <leader>s 语法开关，关闭语法可以加快大文件的展示
-nnoremap <leader>s :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
+" <leader>S 语法开关，关闭语法可以加快大文件的展示
+nnoremap <leader>S :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 " Go to home and end using capitalized directions
 noremap T ^    " H一行第一个字符处
@@ -555,6 +555,52 @@ Bundle 'wesleyche/SrcExpl'
 Bundle "gregsexton/gitv"
 Bundle "vim-scripts/ZoomWin"
 
+" Code and files fuzzy finder
+Bundle "kien/ctrlp.vim"
+" Extension to ctrlp, for fuzzy command finder
+Bundle "fisadev/vim-ctrlp-cmdpalette"
+" Zen coding
+Bundle "mattn/emmet-vim"
+" Git integration
+Bundle "motemen/git-vim"
+" Tab list panel
+Bundle "kien/tabman.vim"
+" Pending tasks list
+Bundle "fisadev/FixedTaskList.vim"
+" Surround
+Bundle "tpope/vim-surround"
+" Autoclose
+Bundle "Townk/vim-autoclose"
+
+" Python and PHP Debugger
+Bundle "fisadev/vim-debug.vim"
+" Python mode (indentation, doc, refactor, lints, code checking, motion and
+" operators, highlighting, run and ipdb breakpoints)
+Bundle "klen/python-mode"
+
+" Git/mercurial/others diff icons on the side of the file lines
+Bundle "mhinz/vim-signify"
+
+" Automatically sort python imports
+Bundle "fisadev/vim-isort"
+
+" Markdown syntastic highlight
+Bundle "godlygeek/tabular"
+Bundle "plasticboy/vim-markdown"
+" Markdown realtime preview
+" Before you want to use it, please run
+" `sudo npm -g install instant-markdown-d`
+Bundle "suan/vim-instant-markdown"
+
+" Handlebars syntax highlighting
+Bundle "mustache/vim-mustache-handlebars"
+
+" Search results counter
+Bundle "IndexedSearch"
+" XML/HTML tags navigation
+Bundle "matchit.zip"
+" Yank history navigation
+"Bundle "YankRing.vim"
 "********************vundle 配置结束**********************
 
 
@@ -601,6 +647,9 @@ let Tlist_Show_Menu=1
 map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC>:NERDTreeToggle<CR>
 
+" open nerdtree with the current file selected
+nmap <leader>t :NERDTreeFind<CR>
+
 "将NERDTree放置在编辑区右边   
 let NERDTreeWinPos=0  
   
@@ -630,6 +679,9 @@ function! NERDTree_IsValid()
     return 1  
 endfunction
 
+" don;t show these file types
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
+
 
 " Ctrl+C q Quickfix窗口关闭
 map <C-c>q :ccl<CR>
@@ -641,15 +693,26 @@ imap <C-c>q <ESC>:ccl<CR>
 "*****************************************************
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_error_symbol = 'e!'  "set error or warning signs
-let g:syntastic_warning_symbol = 'w!'
+let g:syntastic_error_symbol = '✗'  "set error or warning signs
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
+
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_python_checkers=['pyflakes']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+" don't put icons on the sign column (it hides the vcs status icons of signify)
+let g:syntastic_enable_signs = 1
 
+
+" show list of errors and warnings on the current file
+nmap <leader>se :Errors<CR>
+" turn to next or previous errors, after open errors list
+nmap <leader>sn :lnext<CR>
+nmap <leader>sp :lprevious<CR>
 
 "syntastic 保存检查代码时引入第三方库的语法检查,这个设置还有待考证，如果开启会导致多级目录syntastic失效
 "let g:syntastic_java_javac_args="-cp ../../lib:../../bin -sourcepath ../../bin -Djava.ext.dirs=../../lib -d ../../bin"
@@ -1070,6 +1133,184 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>   "<leader>z 触发放大 (没有作用)
 
+
+" -----------------------------------------------------------------------------
+" file finder mapping.设置
+" -----------------------------------------------------------------------------
+let g:ctrlp_map = '.e'
+" hidden some types files
+let g:ctrlp_show_hidden = 1
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif           "Linux
+" tags (symbols) in current file finder mapping
+nmap .g :CtrlPBufTag<CR>
+" tags (symbols) in all files finder mapping
+nmap .G :CtrlPBufTagAll<CR>
+" general code finder in all files mapping
+nmap .f :CtrlPLine<CR>
+" recent files finder mapping
+nmap .m :CtrlPMRUFiles<CR>
+" commands finder mapping
+nmap .c :CtrlPCmdPalette<CR>
+" to be able to call CtrlP with default search text
+function! CtrlPWithSearchText(search_text, ctrlp_command_end)
+    execute ':CtrlP' . a:ctrlp_command_end
+    call feedkeys(a:search_text)
+endfunction
+" same as previous mappings, but calling with current word as default text
+nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
+nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
+nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
+nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
+nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
+nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
+nmap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
+" don't change working directory
+let g:ctrlp_working_path_mode = 0
+" ignore these files and folders on file finder
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
+  \ 'file': '\.pyc$\|\.pyo$',
+  \ }
+
+
+
+
+" -----------------------------------------------------------------------------
+" Signify 设置
+" -----------------------------------------------------------------------------
+" this first setting decides in which order try to guess your current vcs
+" UPDATE it to reflect your preferences, it will speed up opening files
+let g:signify_vcs_list = [ 'git', 'hg' ]
+" mappings to jump to changed blocks
+nmap <leader>sin <plug>(signify-next-hunk)
+nmap <leader>sip <plug>(signify-prev-hunk)
+" nicer colors
+highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
+highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
+highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
+highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+
+
+
+
+" -----------------------------------------------------------------------------
+" Airline 设置
+" -----------------------------------------------------------------------------
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'bubblegum'
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#whitespace#enabled = 1
+
+" to use fancy symbols for airline, uncomment the following lines and use a
+" patched font (more info on the README.rst)
+if !exists('g:airline_symbols')
+   let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+
+
+" -----------------------------------------------------------------------------
+" Vim-markdown 设置
+" -----------------------------------------------------------------------------
+
+" Disabled automatically folding
+let g:vim_markdown_folding_disabled=1
+" LeTeX math
+let g:vim_markdown_math=1
+" Highlight YAML frontmatter
+let g:vim_markdown_frontmatter=1
+
+
+
+" -----------------------------------------------------------------------------
+" Vim-instant-markdown 设置
+" -----------------------------------------------------------------------------
+
+" If it takes your system too much, you can specify
+" let g:instant_markdown_slow = 1
+" if you don't want to manually control it
+" you can open this setting
+" and when you open this, you can manually trigger preview
+" via the command :InstantMarkdownPreview
+let g:instant_markdown_autostart = 0
+
+
+
+" -----------------------------------------------------------------------------
+" Vim-debug 设置
+" -----------------------------------------------------------------------------
+
+" disable default mappings, have a lot of conflicts with other plugins
+let g:vim_debug_disable_mappings = 1
+" add some useful mappings
+map <leader>Dov :Dbg over<CR>
+map <leader>Di :Dbg into<CR>
+map <leader>Dou :Dbg out<CR>
+map <leader>Dh :Dbg here<CR>
+map <leader>Db :Dbg break<CR>
+map <leader>Dw :Dbg watch<CR>
+map <leader>Dd :Dbg down<CR>
+map <leader>Du :Dbg up<CR>
+
+
+" -----------------------------------------------------------------------------
+" Python-mode 设置
+" -----------------------------------------------------------------------------
+
+" don't use linter, we use syntastic for that
+let g:pymode_lint_on_write = 0
+let g:pymode_lint_signs = 0
+" don't fold python code on open
+let g:pymode_folding = 0
+" don't load rope by default. Change to 1 to use rope
+let g:pymode_rope = 0
+" open definitions on same window, and custom mappings for definitions and
+" occurrences
+let g:pymode_rope_goto_definition_bind = ',d'
+let g:pymode_rope_goto_definition_cmd = 'e'
+nmap <leader>P :tab split<CR>:PymodePython rope.goto()<CR>
+nmap <leader>O :RopeFindOccurrences<CR>
+
+
+" -----------------------------------------------------------------------------
+" Autoclose 设置
+" -----------------------------------------------------------------------------
+
+" Fix to let ESC work as espected with Autoclose plugin
+let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
+
+
+
+" -----------------------------------------------------------------------------
+" Signify 设置
+" -----------------------------------------------------------------------------
+
+" this first setting decides in which order try to guess your current vcs
+" UPDATE it to reflect your preferences, it will speed up opening files
+let g:signify_vcs_list = [ 'git', 'hg' ]
+" mappings to jump to changed blocks
+nmap <leader>sn <plug>(signify-next-hunk)
+nmap <leader>sp <plug>(signify-prev-hunk)
+" nicer colors
+highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
+highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
+highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
+highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 "#######################内部的配置未使用#########################
 
