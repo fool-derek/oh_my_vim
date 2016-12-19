@@ -3,7 +3,7 @@
 "
 " Last Change: 2015年12月24日 15时13分 
 "
-" Author: 陈昌栋
+" Author: Derek Chen
 "
 " Version: 1.10
 "
@@ -27,7 +27,7 @@ filetype indent on " 针对不同的文件类型采用不同的缩进格式
 set nocompatible " 关闭 vi 兼容模式
 syntax on " 自动语法高亮
 set t_Co=256 "非常重要，决定配色方案能否有效
-colorscheme molokai " 设定配色方案
+colorscheme monokai " 设定配色方案
 
 set autoread " 文件修改之后自动载入
 set shortmess=atI " 启动的时候不显示那个帮助可怜的乌干达儿童的提示
@@ -52,6 +52,9 @@ set showmode "左下角显示当前vim模式
 set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
 set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
 set tabstop=4 " 设定 tab 长度为 4
+set expandtab
+" <leader>ts 将TAB替换为空格
+nnoremap <leader>ts :%retab!<CR>
 
 set nobackup " 覆盖文件时不备份
 set backupcopy=yes " 设置备份时的行为为覆盖
@@ -427,13 +430,13 @@ autocmd BufNewFile *.cpp,*.[ch],*.sh,*.py,*.java exec ":call SetTitle()"
 func SetTitle() 
 	"如果文件类型为.sh文件 
 	if &filetype == 'sh' 
-		call setline(1,"\#########################################################################") 
-		call append(line("."), "\# File Name: ".expand("%")) 
-		call append(line(".")+1, "\# Author: 陈昌栋") 
-		call append(line(".")+2, "\# Mail: ccdaccd@163.com") 
-		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-		call append(line(".")+4, "\#########################################################################") 
-		call append(line(".")+5, "\#!/bin/bash") 
+		call setline(1,"\#!/bin/bash") 
+		call append(line("."), "\#########################################################################") 
+		call append(line(".")+1, "\# File Name: ".expand("%")) 
+		call append(line(".")+2, "\# Author: Derek Chen") 
+		call append(line(".")+3, "\# Mail: ccdaccd@163.com") 
+		call append(line(".")+4, "\# Created Time: ".strftime("%c")) 
+		call append(line(".")+5, "\#########################################################################") 
 		call append(line(".")+6, "")
 	elseif &filetype == 'python' 
 	
@@ -442,7 +445,7 @@ func SetTitle()
 		
 		call append(line(".")+1,"\#########################################################################") 
 		call append(line(".")+2, "\# File Name: ".expand("%")) 
-		call append(line(".")+3, "\# Author: 陈昌栋") 
+		call append(line(".")+3, "\# Author: Derek Chen") 
 		call append(line(".")+4, "\# Mail: ccdaccd@163.com") 
 		call append(line(".")+5, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+6, "\#########################################################################")
@@ -451,15 +454,15 @@ func SetTitle()
 		call setline(1, "/**") 
 		call append(line("."), "  * @Title: ".expand("%")) 
 		call append(line(".")+1, "  * @Package: ") 
-		call append(line(".")+2, "  * @Description: (用一句话描述该文件做什么)") 
-		call append(line(".")+3, "  * @author: 陈昌栋 ccdaccd@163.com") 
+		call append(line(".")+2, "  * @Description: (One sentence to dicribe it)") 
+		call append(line(".")+3, "  * @author: Derek Chen ccdaccd@163.com") 
 		call append(line(".")+4, "  * @date: ".strftime("%c")) 
 		call append(line(".")+5, "  * @version: V1.0") 
 		call append(line(".")+6, " */") 
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "    > File Name: ".expand("%")) 
-		call append(line(".")+1, "    > Author: 陈昌栋") 
+		call append(line(".")+1, "    > Author: Derek Chen") 
 		call append(line(".")+2, "    > Mail: ccdaccd@163.com ") 
 		call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
@@ -477,8 +480,8 @@ func SetTitle()
 		call append(line(".")+7, "public class ".split(expand("%"),'\.')[0]." {")
 		call append(line(".")+8, "	/**") 
 		call append(line(".")+9, "	 * @ClassName: ".split(expand("%"),'\.')[0]) 
-		call append(line(".")+10, "	 * @Description: (用一句话描述该类做什么)") 
-		call append(line(".")+11, "	 * @author: 陈昌栋 ccdaccd@163.com") 
+		call append(line(".")+10, "	 * @Description: (One sentence to dicribe it)") 
+		call append(line(".")+11, "	 * @author: Derek Chen ccdaccd@163.com") 
 		call append(line(".")+12, "	 * @date: ".strftime("%c")) 
 		call append(line(".")+13, "	 */") 
 		call append(line(".")+14, "	public static void main(String[] args) {") 
@@ -557,23 +560,31 @@ Bundle "vim-scripts/ZoomWin"
 
 " Code and files fuzzy finder
 Bundle "kien/ctrlp.vim"
+
 " Extension to ctrlp, for fuzzy command finder
 Bundle "fisadev/vim-ctrlp-cmdpalette"
+
 " Zen coding
 Bundle "mattn/emmet-vim"
+
 " Git integration
 Bundle "motemen/git-vim"
+
 " Tab list panel
 Bundle "kien/tabman.vim"
+
 " Pending tasks list
 Bundle "fisadev/FixedTaskList.vim"
+
 " Surround
 Bundle "tpope/vim-surround"
+
 " Autoclose
-Bundle "Townk/vim-autoclose"
+" Bundle "Townk/vim-autoclose"
 
 " Python and PHP Debugger
 Bundle "fisadev/vim-debug.vim"
+
 " Python mode (indentation, doc, refactor, lints, code checking, motion and
 " operators, highlighting, run and ipdb breakpoints)
 Bundle "klen/python-mode"
@@ -587,6 +598,7 @@ Bundle "fisadev/vim-isort"
 " Markdown syntastic highlight
 Bundle "godlygeek/tabular"
 Bundle "plasticboy/vim-markdown"
+
 " Markdown realtime preview
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
@@ -596,11 +608,16 @@ Bundle "suan/vim-instant-markdown"
 Bundle "mustache/vim-mustache-handlebars"
 
 " Search results counter
-Bundle "IndexedSearch"
+" Bundle "IndexedSearch"
+
 " XML/HTML tags navigation
 Bundle "matchit.zip"
+
 " Yank history navigation
-"Bundle "YankRing.vim"
+" Bundle "YankRing.vim"
+
+" Code Search
+Bundle 'mileszs/ack.vim'
 "********************vundle 配置结束**********************
 
 
@@ -648,7 +665,7 @@ map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC>:NERDTreeToggle<CR>
 
 " open nerdtree with the current file selected
-nmap <leader>t :NERDTreeFind<CR>
+nmap <leader>nf :NERDTreeFind<CR>
 
 "将NERDTree放置在编辑区右边   
 let NERDTreeWinPos=0  
@@ -1025,16 +1042,25 @@ vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
 vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGette
 
 "path to additional jar files.
-let g:JavaComplete_LibsPath = "/root/algs4/algs4.jar"
+let g:JavaComplete_LibsPath = '~/algs4/algs4Lib/'
 
 "path of additional sources. 
 "g:JavaComplete_SourcesPath = 'src/'
+
+" Disable maven repository
+let g:JavaComplete_MavenRepositoryDisable = 1 
 
 "use full qualified name in completions description. By default is 0.
 let g:JavaComplete_UseFQN = 1
 
 "add close brace automatically
-let g:JavaComplete_ClosingBrace = 1
+"let g:JavaComplete_ClosingBrace = 1
+
+" In the import selection the default behavior is to use the first option available
+let g:JavaComplete_ImportDefault = 0
+
+" Disable javacomplete2 default mappings
+let g:JavaComplete_EnableDefaultMappings = 0 
 
 " -----------------------------------------------------------------------------
 "  < Eclim插件配置 > java 补全插件
@@ -1311,6 +1337,11 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+
+" -----------------------------------------------------------------------------
+" ack.vim 设置
+" -----------------------------------------------------------------------------
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 "#######################内部的配置未使用#########################
 
