@@ -3,7 +3,7 @@
 "
 " Last Change: 2015年12月24日 15时13分 
 "
-" Author: Derek Chen
+" Author: 陈昌栋
 "
 " Version: 1.10
 "
@@ -27,7 +27,10 @@ filetype indent on " 针对不同的文件类型采用不同的缩进格式
 set nocompatible " 关闭 vi 兼容模式
 syntax on " 自动语法高亮
 set t_Co=256 "非常重要，决定配色方案能否有效
-colorscheme monokai " 设定配色方案
+colorscheme molokai " 设定配色方案
+
+autocmd BufNewFile,BufRead *.bbt,*.bnf,*.abnf set filetype=abnf
+autocmd FileType abnf,java,c,cpp set colorcolumn=80
 
 set autoread " 文件修改之后自动载入
 set shortmess=atI " 启动的时候不显示那个帮助可怜的乌干达儿童的提示
@@ -52,13 +55,16 @@ set showmode "左下角显示当前vim模式
 set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
 set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
 set tabstop=4 " 设定 tab 长度为 4
+" autocmd FileType abnf,java,c,cpp,sh,python set expandtab
+" autocmd FileType abnf,java,c,cpp,sh,python nnoremap <leader>ts :%retab!<CR>
 set expandtab
-" <leader>ts 将TAB替换为空格
 nnoremap <leader>ts :%retab!<CR>
 
 set nobackup " 覆盖文件时不备份
 set backupcopy=yes " 设置备份时的行为为覆盖
-set autochdir " 自动切换当前目录为当前文件所在的目录
+" set autochdir " 自动切换当前目录为当前文件所在的目录
+" autocmd FileType !vimshell set autochdir " 自动切换当前目录为当前文件所在的目录
+autocmd FileType !sh set autochdir " 自动切换当前目录为当前文件所在的目录
 
 filetype plugin on " 允许插件
 filetype plugin indent on " 开启插件
@@ -90,7 +96,7 @@ set clipboard+=unnamed "共享剪贴板
 set cmdheight=1 " 设定命令行的行数为 1
 set laststatus=2 " 显示状态栏 (默认值为 1, 无法显示状态栏)
 set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\  " 设置在状态行显示的信息
-"set fillchars+=stl:\ ,stlnc:\ " Vim中分割线字符
+set fillchars+=stl:\ ,stlnc:\ " Vim中分割线字符
 set report=0 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
 
 "set foldenable " 开始折叠
@@ -103,7 +109,6 @@ set report=0 " 通过使用: commands命令，告诉我们文件的哪一行被�
 " 修复ctrl+m 多光标操作选择的bug，但是改变了ctrl+v进行字符选中时将包含光标下的字符
 set selection=inclusive
 set selectmode=mouse,key
-
 
 "-------------------行号相关开始--------------------
 "set relativenumber number " 相对行号: 行号变成相对，可以用 nj/nk 进行跳转
@@ -174,7 +179,7 @@ vnoremap <leader>p "+y
 map <leader>a ggVG"
 
 " select block 选择块
-nnoremap <leader>v V`}
+nnoremap <leader>vb V`}
 
 " Buffers操作快捷方式!
 nnoremap <C-RETURN> :bnext<CR>
@@ -190,6 +195,14 @@ map tp :tabprevious<CR>
 map td :tabnew .<CR>
 map te :tabedit
 map tc :tabclose<CR>
+
+"-------------------------------------------------------------------------------
+" close window (conflicts with the KDE setting for calling the process
+" manager)
+"-------------------------------------------------------------------------------
+noremap  <C-Esc>       :close<CR>
+inoremap  <C-Esc>  <C-C>:close<CR>
+
 
 "窗口分割时,进行切换的按键热键需要连接两次,比如从下方窗口移动
 "光标到上方窗口,需要<c-w><c-w>k,非常麻烦,现在重映射为<c-k>,切换的
@@ -265,9 +278,10 @@ let helptags=$VIMFILES.'/doc'
 if has("win32")
 "set guifont=Inconsolata:h11:cANSI
 "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12:cANSI
-set guifont=DejaVu\ Sans\ Mono:h12:cANSI
+"set guifont=DejaVu\ Sans\ Mono:h12:cANSI
 "set gfw=微软雅黑:h12:cANSI
 endif
+set guifont=DejaVu\ Sans\ Mono:h12:cANSI
 
 " 配置多语言环境
 if has("multi_byte")
@@ -433,8 +447,8 @@ func SetTitle()
 		call setline(1,"\#!/bin/bash") 
 		call append(line("."), "\#########################################################################") 
 		call append(line(".")+1, "\# File Name: ".expand("%")) 
-		call append(line(".")+2, "\# Author: Derek Chen") 
-		call append(line(".")+3, "\# Mail: ccdaccd@163.com") 
+		call append(line(".")+2, "\# Author: Changdong Chen") 
+		call append(line(".")+3, "\# Mail: changdon@synopsys.com") 
 		call append(line(".")+4, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+5, "\#########################################################################") 
 		call append(line(".")+6, "")
@@ -445,8 +459,8 @@ func SetTitle()
 		
 		call append(line(".")+1,"\#########################################################################") 
 		call append(line(".")+2, "\# File Name: ".expand("%")) 
-		call append(line(".")+3, "\# Author: Derek Chen") 
-		call append(line(".")+4, "\# Mail: ccdaccd@163.com") 
+		call append(line(".")+3, "\# Author: Changdong Chen") 
+		call append(line(".")+4, "\# Mail: changdon@synosys.com") 
 		call append(line(".")+5, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+6, "\#########################################################################")
 		call append(line(".")+7, "") 
@@ -454,16 +468,16 @@ func SetTitle()
 		call setline(1, "/**") 
 		call append(line("."), "  * @Title: ".expand("%")) 
 		call append(line(".")+1, "  * @Package: ") 
-		call append(line(".")+2, "  * @Description: (One sentence to dicribe it)") 
-		call append(line(".")+3, "  * @author: Derek Chen ccdaccd@163.com") 
+		call append(line(".")+2, "  * @Description: (One sentence to describe the file)") 
+		call append(line(".")+3, "  * @author: Changdong Chen changdon@synopsys.com") 
 		call append(line(".")+4, "  * @date: ".strftime("%c")) 
 		call append(line(".")+5, "  * @version: V1.0") 
 		call append(line(".")+6, " */") 
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "    > File Name: ".expand("%")) 
-		call append(line(".")+1, "    > Author: Derek Chen") 
-		call append(line(".")+2, "    > Mail: ccdaccd@163.com ") 
+		call append(line(".")+1, "    > Author: Changdong Chen") 
+		call append(line(".")+2, "    > Mail: changdon@synopsys.com ") 
 		call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
 	endif
@@ -480,8 +494,8 @@ func SetTitle()
 		call append(line(".")+7, "public class ".split(expand("%"),'\.')[0]." {")
 		call append(line(".")+8, "	/**") 
 		call append(line(".")+9, "	 * @ClassName: ".split(expand("%"),'\.')[0]) 
-		call append(line(".")+10, "	 * @Description: (One sentence to dicribe it)") 
-		call append(line(".")+11, "	 * @author: Derek Chen ccdaccd@163.com") 
+		call append(line(".")+10, "	 * @Description: (One sentence to describe the file)") 
+		call append(line(".")+11, "	 * @author: Changdong Chen changdon@synopsys.com") 
 		call append(line(".")+12, "	 * @date: ".strftime("%c")) 
 		call append(line(".")+13, "	 */") 
 		call append(line(".")+14, "	public static void main(String[] args) {") 
@@ -551,6 +565,7 @@ Bundle 'artur-shaik/vim-javacomplete2'
 Bundle 'Mark--Karkat'
 Bundle 'rkulla/pydiction'
 "Bundle 'vim-airline'
+"Bundle 'vim-airline/vim-airline-themes'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'a.vim'
 Bundle 'Align'
@@ -560,31 +575,23 @@ Bundle "vim-scripts/ZoomWin"
 
 " Code and files fuzzy finder
 Bundle "kien/ctrlp.vim"
-
 " Extension to ctrlp, for fuzzy command finder
 Bundle "fisadev/vim-ctrlp-cmdpalette"
-
 " Zen coding
 Bundle "mattn/emmet-vim"
-
 " Git integration
 Bundle "motemen/git-vim"
-
 " Tab list panel
 Bundle "kien/tabman.vim"
-
 " Pending tasks list
 Bundle "fisadev/FixedTaskList.vim"
-
 " Surround
 Bundle "tpope/vim-surround"
-
 " Autoclose
 " Bundle "Townk/vim-autoclose"
 
 " Python and PHP Debugger
 Bundle "fisadev/vim-debug.vim"
-
 " Python mode (indentation, doc, refactor, lints, code checking, motion and
 " operators, highlighting, run and ipdb breakpoints)
 Bundle "klen/python-mode"
@@ -598,7 +605,6 @@ Bundle "fisadev/vim-isort"
 " Markdown syntastic highlight
 Bundle "godlygeek/tabular"
 Bundle "plasticboy/vim-markdown"
-
 " Markdown realtime preview
 " Before you want to use it, please run
 " `sudo npm -g install instant-markdown-d`
@@ -607,17 +613,24 @@ Bundle "suan/vim-instant-markdown"
 " Handlebars syntax highlighting
 Bundle "mustache/vim-mustache-handlebars"
 
-" Search results counter
+" Search results counter Be Conflict to Seearch "/"
 " Bundle "IndexedSearch"
-
 " XML/HTML tags navigation
 Bundle "matchit.zip"
-
 " Yank history navigation
 " Bundle "YankRing.vim"
-
-" Code Search
-Bundle 'mileszs/ack.vim'
+" Support Shell in Vim
+Bundle 'Shougo/vimproc.vim', {
+            \ 'build' : {
+            \     'windows' : 'tools\\update-dll-mingw',
+            \     'cygwin' : 'make -f make_cygwin.mak',
+            \     'mac' : 'make',
+            \     'linux' : 'make',
+            \     'unix' : 'gmake',
+            \    },
+            \ }
+Bundle "Shougo/vimshell"
+Bundle "WolfgangMehner/bash-support"
 "********************vundle 配置结束**********************
 
 
@@ -665,7 +678,7 @@ map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC>:NERDTreeToggle<CR>
 
 " open nerdtree with the current file selected
-nmap <leader>nf :NERDTreeFind<CR>
+nmap <leader>t :NERDTreeFind<CR>
 
 "将NERDTree放置在编辑区右边   
 let NERDTreeWinPos=0  
@@ -755,9 +768,11 @@ map <leader>fb :FufBuffer<CR>
 " -----------------------------------------------------------------------------
 "  Powerline状态栏设置
 " -----------------------------------------------------------------------------
-let g:Powerline_symbols = 'fancy' "状态栏分割符设置
-"let g:Powerline_symbols = 'compatible'
-
+" let g:Powerline_symbols = 'fancy' "状态栏分割符设置
+" let g:Powerline_symbols = 'compatible'
+let g:Powerline_symbols = 'unicode'
+let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/.vim/.cache/')
+"let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
 
 
 "-----------------------------------------------------------------
@@ -868,10 +883,10 @@ hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
 hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
 
 
-"使用Ctrl+D关闭Buffer中的一个文件
-imap <C-D> <C-O>:bd<CR>
-vmap <C-D> <C-c>:bd<CR>
-nmap <C-D> :bd<CR>
+"使用Ctrl+F关闭Buffer中的一个文件
+imap <C-f> <C-O>:bd<CR>
+vmap <C-f> <C-c>:bd<CR>
+nmap <C-f> :bd<CR>
 
 
 " buffer 切换快捷键，默认方向键左右可以切换buffer 
@@ -909,7 +924,7 @@ let g:clang_use_library = 1
 let g:ycm_collect_identifiers_from_tags_files=1
 
 " 引入 C++ 标准库tags，这个没有也没关系，只要.ycm_extra_conf.py文件中指定了正确的标准库路径  
-set tags+=/data/misc/software/misc./vim/stdcpp.tags
+" set tags+=/data/misc/software/misc./vim/stdcpp.tags
 
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键  
 inoremap <leader>yc <C-x><C-o>
@@ -940,16 +955,16 @@ let g:ycm_filetype_blacklist = {
       \}
       
 "let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'python' : 1,
-      \ 'nerdtree' : 1,
-      \}
+      " \ 'tagbar' : 1,
+      " \ 'python' : 1,
+      " \ 'nerdtree' : 1,
+      " \}
       
 "当使用wxPython编程是开启这个功能，这样可以关闭YouCompleteme,jdei补全就开始起作用    
 "let g:ycm_filetype_specific_completion_to_disable = {
-      \ 'python': 1,
-      \ 'gitcommit': 1,
-      \}     
+      " \ 'python': 1,
+      " \ 'gitcommit': 1,
+      " \}     
       
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
@@ -984,9 +999,9 @@ vmap <C-J> <C-c>:YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword
 "let g:UltiSnipsSnippetDirectories=["bundle/vim-snippets/UltiSnips"]
 
 let g:ycm_filepath_completion_use_working_dir = 1
-"let g:ycm_use_ultisnips_completer = 1
+let g:ycm_use_ultisnips_completer = 1
 let g:ycm_disable_for_files_larger_than_kb = 0
-"let g:ycm_allow_changing_updatetime = 0
+let g:ycm_allow_changing_updatetime = 0
 let g:ycm_open_loclist_on_ycm_diags = 1
 
 
@@ -1004,8 +1019,8 @@ inoremap <expr> <C-K> pumvisible()?"\<C-E>":"\<C-U>"     " 关闭补全列表
 "  < vim-javacomplete2（也就是 javacomplete）插件配置 > java 补全插件
 " -----------------------------------------------------------------------------
 "setlocal omnifunc=javacomplete#Complete
-"autocmd FileType java set omnifunc=javacomplete#Complete
-"autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
+" autocmd FileType java set omnifunc=javacomplete#Complete
+" autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete "自动补全
 autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInf "参数补全
@@ -1042,25 +1057,16 @@ vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
 vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGette
 
 "path to additional jar files.
-let g:JavaComplete_LibsPath = '~/algs4/algs4Lib/'
+let g:JavaComplete_LibsPath = '/root/Defensics/sdk-11.11.2.jar'
 
 "path of additional sources. 
-"g:JavaComplete_SourcesPath = 'src/'
-
-" Disable maven repository
-let g:JavaComplete_MavenRepositoryDisable = 1 
+" g:JavaComplete_SourcesPath = 'src/'
 
 "use full qualified name in completions description. By default is 0.
 let g:JavaComplete_UseFQN = 1
 
 "add close brace automatically
-"let g:JavaComplete_ClosingBrace = 1
-
-" In the import selection the default behavior is to use the first option available
-let g:JavaComplete_ImportDefault = 0
-
-" Disable javacomplete2 default mappings
-let g:JavaComplete_EnableDefaultMappings = 0 
+let g:JavaComplete_ClosingBrace = 1
 
 " -----------------------------------------------------------------------------
 "  < Eclim插件配置 > java 补全插件
@@ -1068,16 +1074,16 @@ let g:JavaComplete_EnableDefaultMappings = 0
 
 " 日志级别,日志文件默认在workspace/eclimd.log
 " 除了默认的info,还有trace,debug,warning,error,off
-let g:EclimLogLevel = 'info'
+" let g:EclimLogLevel = 'info'
 " 设置浏览器,firefox,mozilla,opera,iexplore
-let g:EclimBrowser = 'firefox'
+" let g:EclimBrowser = 'firefox'
 " 让eclim配合ycm实现java等语言的自动补全
 " 编辑的文件必须是eclipse的一个项目中的文件才会自动补全
 " 这个变量的作用是(仅举例java文件):set omnifunc=eclim#java#complete#CodeComplete
 "let g:EclimCompletionMethod = 'omnifunc'
-let g:EclimPythonValidate = 0
-let g:EclimCppValidate = 0
-let g:EclimFileTypeValidate = 0 "可以启用Syntastic语法检查功能
+" let g:EclimPythonValidate = 0
+" let g:EclimCppValidate = 0
+" let g:EclimFileTypeValidate = 0 "可以启用Syntastic语法检查功能
 
 " -----------------------------------------------------------------------------
 "  < vim-javacompleteex（也就是 javacomplete 增强版）插件配置 > java 补全插件
@@ -1227,10 +1233,11 @@ highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'bubblegum'
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " to use fancy symbols for airline, uncomment the following lines and use a
 " patched font (more info on the README.rst)
@@ -1238,13 +1245,8 @@ if !exists('g:airline_symbols')
    let g:airline_symbols = {}
 endif
 
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+let g:airline_exclude_filename = []
+let g:airline_symbols.space = "\ua0"
 
 
 
@@ -1272,6 +1274,8 @@ let g:vim_markdown_frontmatter=1
 " and when you open this, you can manually trigger preview
 " via the command :InstantMarkdownPreview
 let g:instant_markdown_autostart = 0
+" Set <leader>mp to manually trigger preview 
+nnoremap <leader>mp :InstantMarkdownPreview<CR>
 
 
 
@@ -1305,8 +1309,8 @@ let g:pymode_folding = 0
 let g:pymode_rope = 0
 " open definitions on same window, and custom mappings for definitions and
 " occurrences
-let g:pymode_rope_goto_definition_bind = ',d'
-let g:pymode_rope_goto_definition_cmd = 'e'
+" let g:pymode_rope_goto_definition_bind = ',d'
+" let g:pymode_rope_goto_definition_cmd = 'e'
 nmap <leader>P :tab split<CR>:PymodePython rope.goto()<CR>
 nmap <leader>O :RopeFindOccurrences<CR>
 
@@ -1338,11 +1342,6 @@ highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
-" -----------------------------------------------------------------------------
-" ack.vim 设置
-" -----------------------------------------------------------------------------
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
 "#######################内部的配置未使用#########################
 
 "-----------------------------------------------------------------
@@ -1368,6 +1367,22 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 "-----------------------------------------------------------------
 let g:checksyntax_auto = 0 " 不自动检查
 
+"-----------------------------------------------------------------
+" plugin – vimshell.vim 
+"-----------------------------------------------------------------
+nnoremap <leader>vs :VimShell<CR>
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+let g:vimshell_prompt = '% '
+let g:vimshell_split_command = ''
+let g:vimshell_enable_transient_user_prompt = 1
+let g:vimshell_force_overwrite_statusline = 1
+
+"-----------------------------------------------------------------
+" plugin – bash-support.vim 
+"-----------------------------------------------------------------
+" autocmd FileType sh execute 'source /root/.vim/bundle/bash-support/bash-support/rc/customization.vimrc'
+let g:BASH_MapLeader  = '\'
+let g:BASH_InsertFileHeader='no'
 
 "-----------------------------------------------------------------
 " plugin - NeoComplCache.vim 自动补全插件
