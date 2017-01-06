@@ -27,7 +27,7 @@ filetype indent on " 针对不同的文件类型采用不同的缩进格式
 set nocompatible " 关闭 vi 兼容模式
 syntax on " 自动语法高亮
 set t_Co=256 "非常重要，决定配色方案能否有效
-colorscheme molokai " 设定配色方案
+colorscheme monokai " 设定配色方案
 
 autocmd BufNewFile,BufRead *.bbt,*.bnf,*.abnf set filetype=abnf
 autocmd FileType abnf,java,c,cpp set colorcolumn=80
@@ -447,8 +447,8 @@ func SetTitle()
 		call setline(1,"\#!/bin/bash") 
 		call append(line("."), "\#########################################################################") 
 		call append(line(".")+1, "\# File Name: ".expand("%")) 
-		call append(line(".")+2, "\# Author: Changdong Chen") 
-		call append(line(".")+3, "\# Mail: changdon@synopsys.com") 
+		call append(line(".")+2, "\# Author: Derek Chen") 
+		call append(line(".")+3, "\# Mail: ccdaccd@163.com") 
 		call append(line(".")+4, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+5, "\#########################################################################") 
 		call append(line(".")+6, "")
@@ -459,7 +459,7 @@ func SetTitle()
 		
 		call append(line(".")+1,"\#########################################################################") 
 		call append(line(".")+2, "\# File Name: ".expand("%")) 
-		call append(line(".")+3, "\# Author: Changdong Chen") 
+		call append(line(".")+3, "\# Author: Derek Chen") 
 		call append(line(".")+4, "\# Mail: changdon@synosys.com") 
 		call append(line(".")+5, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+6, "\#########################################################################")
@@ -469,15 +469,15 @@ func SetTitle()
 		call append(line("."), "  * @Title: ".expand("%")) 
 		call append(line(".")+1, "  * @Package: ") 
 		call append(line(".")+2, "  * @Description: (One sentence to describe the file)") 
-		call append(line(".")+3, "  * @author: Changdong Chen changdon@synopsys.com") 
+		call append(line(".")+3, "  * @author: Derek Chen ccdaccd@163.com") 
 		call append(line(".")+4, "  * @date: ".strftime("%c")) 
 		call append(line(".")+5, "  * @version: V1.0") 
 		call append(line(".")+6, " */") 
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "    > File Name: ".expand("%")) 
-		call append(line(".")+1, "    > Author: Changdong Chen") 
-		call append(line(".")+2, "    > Mail: changdon@synopsys.com ") 
+		call append(line(".")+1, "    > Author: Derek Chen") 
+		call append(line(".")+2, "    > Mail: ccdaccd@163.com ") 
 		call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
 	endif
@@ -495,7 +495,7 @@ func SetTitle()
 		call append(line(".")+8, "	/**") 
 		call append(line(".")+9, "	 * @ClassName: ".split(expand("%"),'\.')[0]) 
 		call append(line(".")+10, "	 * @Description: (One sentence to describe the file)") 
-		call append(line(".")+11, "	 * @author: Changdong Chen changdon@synopsys.com") 
+		call append(line(".")+11, "	 * @author: Derek Chen ccdaccd@163.com") 
 		call append(line(".")+12, "	 * @date: ".strftime("%c")) 
 		call append(line(".")+13, "	 */") 
 		call append(line(".")+14, "	public static void main(String[] args) {") 
@@ -768,10 +768,10 @@ map <leader>fb :FufBuffer<CR>
 " -----------------------------------------------------------------------------
 "  Powerline状态栏设置
 " -----------------------------------------------------------------------------
-" let g:Powerline_symbols = 'fancy' "状态栏分割符设置
+let g:Powerline_symbols = 'fancy' "状态栏分割符设置
 " let g:Powerline_symbols = 'compatible'
-let g:Powerline_symbols = 'unicode'
-let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/.vim/.cache/')
+" let g:Powerline_symbols = 'unicode'
+"let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/.vim/.cache/')
 "let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
 
 
@@ -1057,7 +1057,7 @@ vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
 vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGette
 
 "path to additional jar files.
-let g:JavaComplete_LibsPath = '/root/Defensics/sdk-11.11.2.jar'
+let g:JavaComplete_LibsPath = '/root/algs4/algs4.jar'
 
 "path of additional sources. 
 " g:JavaComplete_SourcesPath = 'src/'
