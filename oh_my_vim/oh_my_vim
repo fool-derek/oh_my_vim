@@ -48,7 +48,7 @@ set background=dark "设置背景色
 set number " 显示行号
 "set mouse=a " 鼠标暂不启用, 键盘党....
 set cursorline " 突出显示当前行
-"set cursorcolumn " 突出显示当前列
+set cursorcolumn " 突出显示当前列
 
 set scrolloff=7 " 在上下移动光标时，光标的上方或下方至少会保留显示的行数
 set noswapfile " 关闭交换文件
@@ -57,13 +57,12 @@ set ruler " 打开状态栏标尺
 set showcmd " 输入的命令显示出来，看的清楚些
 set showmode "左下角显示当前vim模式
 
-set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
-set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
-set tabstop=4 " 设定 tab 长度为 4
-" autocmd FileType abnf,java,c,cpp,sh,python set expandtab
-" autocmd FileType abnf,java,c,cpp,sh,python nnoremap <leader>ts :%retab!<CR>
-set expandtab
-nnoremap <leader>ts :%retab!<CR>
+autocmd FileType abnf,java,c,cpp,sh set shiftwidth=2 " 设定 << 和 >> 命令移动时的宽度为 2
+autocmd FileType abnf,java,c,cpp,sh set softtabstop=2 " 使得按退格键时可以一次删掉 2 个空格
+autocmd FileType abnf,java,c,cpp,sh set tabstop=2 " 设定 tab 长度为 2
+autocmd FileType abnf,java,c,cpp,sh set expandtab " tab替换为空格
+set ai " 设置自动缩进
+nnoremap <leader>ts :%retab!<CR> " 替换快捷键
 
 set nobackup " 覆盖文件时不备份
 set backupcopy=yes " 设置备份时的行为为覆盖
@@ -374,7 +373,13 @@ nnoremap <leader>gk :set fileencoding=gbk<CR>
 let html_use_css=1
 
 " Python 文件的一般设置，比如不要 tab 等
-autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
+"autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
+
+autocmd FileType python set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
+autocmd FileType python set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
+autocmd FileType python set tabstop=4 " 设定 tab 长度为 4
+autocmd FileType python set noexpandtab " tab替换为空格
+
 autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType python map <F7> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
 
@@ -465,7 +470,7 @@ func SetTitle()
 		call append(line(".")+1,"\#########################################################################") 
 		call append(line(".")+2, "\# File Name: ".expand("%")) 
 		call append(line(".")+3, "\# Author: Derek Chen") 
-		call append(line(".")+4, "\# Mail: changdon@synosys.com") 
+		call append(line(".")+4, "\# Mail: ccdaccd@163.com") 
 		call append(line(".")+5, "\# Created Time: ".strftime("%c")) 
 		call append(line(".")+6, "\#########################################################################")
 		call append(line(".")+7, "") 
@@ -735,7 +740,10 @@ let g:syntastic_style_warning_symbol = '⚠'
 
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_python_checkers=['pyflakes']
+" Display checker-name for that error-message                                  
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+let g:syntastic_python_checkers=['python3', 'pyflakes']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -908,7 +916,7 @@ map <C-L> :MBEbp<cr>
 let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Use python3 to run this plugin.
-"let g:ycm_server_python_interpreter = '/usr/bin/python3'
+let g:ycm_server_python_interpreter = '/usr/bin/python'
  
 "配置默认的ycm_extra_conf.py
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' 
