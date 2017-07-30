@@ -3,7 +3,7 @@
 这是我的vim配置文件,大体的功能有C、C++、Java、Python语言的语法高亮、语法检查、代码自动补全等功能，具
 体个功能比较多，这里就不一一列举了，详情见Vimrc的注释。  
 
-![intro](https://github.com/DerekChenGit/DerekChenGitShareFiles/blob/master/Python_package.gif "intro")
+![intro](https://raw.githubusercontent.com/wiki/DerekChenGit/oh_my_vim/images/oh_my_vim.gif "intro")
 
 ## 如何安装
 
