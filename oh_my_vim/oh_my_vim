@@ -30,9 +30,11 @@ set t_Co=256 "非常重要，决定配色方案能否有效
 colorscheme monokai " 设定配色方案
 
 autocmd BufNewFile,BufRead *.bbt,*.bnf,*.abnf set filetype=abnf
+autocmd BufNewFile,BufRead *.g set filetype=antlr3
+autocmd BufNewFile,BufRead *.g4 set filetype=antlr4
 "autocmd FileType abnf,java,c,cpp set colorcolumn=80
 if exists('+colorcolumn')
-  autocmd FileType abnf,java,c,cpp set colorcolumn=80
+  autocmd FileType antlr3,antlr4,abnf,java,c,cpp set colorcolumn=80
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
@@ -57,12 +59,17 @@ set ruler " 打开状态栏标尺
 set showcmd " 输入的命令显示出来，看的清楚些
 set showmode "左下角显示当前vim模式
 
-autocmd FileType abnf,java,c,cpp,sh set shiftwidth=2 " 设定 << 和 >> 命令移动时的宽度为 2
-autocmd FileType abnf,java,c,cpp,sh set softtabstop=2 " 使得按退格键时可以一次删掉 2 个空格
-autocmd FileType abnf,java,c,cpp,sh set tabstop=2 " 设定 tab 长度为 2
-autocmd FileType abnf,java,c,cpp,sh set expandtab " tab替换为空格
+set shiftwidth=2 " 设定 << 和 >> 命令移动时的宽度为 4
+set softtabstop=2 " 使得按退格键时可以一次删掉 4 个空格
+set tabstop=2 " 设定 tab 长度为 4
 set ai " 设置自动缩进
-nnoremap <leader>ts :%retab!<CR> " 替换快捷键
+
+" autocmd FileType abnf,java,c,cpp,sh set shiftwidth=2 " 设定 << 和 >> 命令移动时的宽度为 2
+" autocmd FileType abnf,java,c,cpp,sh set softtabstop=2 " 使得按退格键时可以一次删掉 2 个空格
+" autocmd FileType abnf,java,c,cpp,sh set tabstop=2 " 设定 tab 长度为 2
+
+set expandtab
+nnoremap <leader>ts :%retab!<CR>
 
 set nobackup " 覆盖文件时不备份
 set backupcopy=yes " 设置备份时的行为为覆盖
@@ -378,9 +385,9 @@ let html_use_css=1
 autocmd FileType python set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
 autocmd FileType python set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
 autocmd FileType python set tabstop=4 " 设定 tab 长度为 4
-autocmd FileType python set noexpandtab " tab替换为空格
+" autocmd FileType python set noexpandtab " 不要tab替换为空格
 
-autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+" autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType python map <F7> :!ipython --pdb %<CR>   "运行Python如果有错误就用ipdb调试
 
 "autocmd FileType python map <F11> :!python -m pdb %<CR>  "pdb调试
@@ -741,9 +748,9 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 " Display checker-name for that error-message                                  
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_python_python_exec = '/usr/bin/python3'
-let g:syntastic_python_checkers=['python3', 'pyflakes']
+"let g:syntastic_aggregate_errors = 1
+let g:syntastic_python_python_exec = '/usr/bin/python'
+let g:syntastic_python_checkers=['python','pyflakes']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -757,16 +764,16 @@ nmap <leader>se :Errors<CR>
 nmap <leader>sn :lnext<CR>
 nmap <leader>sp :lprevious<CR>
 
-"syntastic 保存检查代码时引入第三方库的语法检查,这个设置还有待考证，如果开启会导致多级目录syntastic失效
-"let g:syntastic_java_javac_args="-cp ../../lib:../../bin -sourcepath ../../bin -Djava.ext.dirs=../../lib -d ../../bin"
+" syntastic 保存检查代码时引入第三方库的语法检查,这个设置还有待考证，如果开启会导致多级目录syntastic失效
+" let g:syntastic_java_javac_args="-cp ../../lib:../../bin -sourcepath ../../bin -Djava.ext.dirs=../../lib -d ../../bin"
 
-set path=.,/forLinux/linux-2.6.30.4/include
-set path+=/forLinux/linux-2.6.30.4/include/uapi
-set path+=/forLinux/linux-2.6.30.4/include/asm-generic
-set path+=/forLinux/linux-2.6.30.4/arch/x86/include
-set path+=/forLinux/linux-2.6.30.4/arch/x86/include/generated
-set path+=/forLinux/linux-2.6.30.4/arch/x86/include/uapi
-set path+=/forLinux/linux-2.6.30.4/arch/x86/include/generated/uapi
+" set path=.,/forLinux/linux-2.6.30.4/include
+" set path+=/forLinux/linux-2.6.30.4/include/uapi
+" set path+=/forLinux/linux-2.6.30.4/include/asm-generic
+" set path+=/forLinux/linux-2.6.30.4/arch/x86/include
+" set path+=/forLinux/linux-2.6.30.4/arch/x86/include/generated
+" set path+=/forLinux/linux-2.6.30.4/arch/x86/include/uapi
+" set path+=/forLinux/linux-2.6.30.4/arch/x86/include/generated/uapi
 
 
 "*****************************************************
@@ -784,15 +791,15 @@ map <leader>fb :FufBuffer<CR>
 let g:Powerline_symbols = 'fancy' "状态栏分割符设置
 " let g:Powerline_symbols = 'compatible'
 " let g:Powerline_symbols = 'unicode'
-"let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/.vim/.cache/')
-"let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
+" let g:Powerline_cache_dir = simplify(expand('<sfile>:p:h') .'/.vim/.cache/')
+" let g:Powerline_dividers_override = ['>>', '>', '<<', '<']
 
 
 "-----------------------------------------------------------------
 " davidhalter/jedi-vim'
 " Python语法提示
 "-----------------------------------------------------------------
-let g:jedi#force_py_version=3 " Set python version
+"let g:jedi#force_py_version=3 " Set python version
 let g:jedi#popup_select_first = 0 "弹出选项是不会默认选第一个
 let g:jedi#auto_vim_configuration = 1 "不跳过自动配置
 let g:jedi#use_tabs_not_buffers = 1
@@ -913,9 +920,9 @@ map <C-L> :MBEbp<cr>
 "		  YouCompleteMe配置				      *
 "*****************************************************  
 " Set the pyhton complete lib
-let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:ycm_python_binary_path = '/usr/bin/python'
 
-" Use python3 to run this plugin.
+" Use python to run this plugin.
 let g:ycm_server_python_interpreter = '/usr/bin/python'
  
 "配置默认的ycm_extra_conf.py
