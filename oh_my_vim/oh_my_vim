@@ -748,9 +748,10 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 " Display checker-name for that error-message                                  
-"let g:syntastic_aggregate_errors = 1
-let g:syntastic_python_python_exec = '/usr/bin/python'
-let g:syntastic_python_checkers=['python','pyflakes']
+let g:syntastic_aggregate_errors = 1
+"let g:syntastic_python_python_exec = '/usr/bin/python'
+"let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_python_flake8_args='--ignore=H105' " Ignore some error in flake8
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
