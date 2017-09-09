@@ -18,7 +18,7 @@
 git clone https://github.com/DerekChenGit/oh_my_vim
 ```
 ```bash
-cp oh_my_vim/oh_my_vim ~/.vimrc
+cp oh_my_vim/vimrc ~/.vimrc
 ```
 
 ### 3. 安装Ctags：apt-get install ctags

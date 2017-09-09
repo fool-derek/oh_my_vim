@@ -173,6 +173,10 @@ imap <C-B> <C-O>:u<CR>
 vmap <C-B> <C-c>:u<CR>
 nmap <C-B> :u<CR>
 
+" Ctrl+C q Quickfix窗口关闭
+map <C-c>q :ccl<CR>
+imap <C-c>q <ESC>:ccl<CR>
+
 " <leader>S 语法开关，关闭语法可以加快大文件的展示
 nnoremap <leader>S :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
@@ -381,7 +385,6 @@ nnoremap <leader>gk :set fileencoding=gbk<CR>
 "-------------------文件设置快捷键相关结束--------------------
 
 
-
 "-------------------不同文件类型对应不同设置开始--------------------
 
 " 让 Tohtml 产生有 CSS 语法的 html
@@ -418,6 +421,7 @@ autocmd filetype css set dictionary=$VIMFILES/dict/css.dict
 autocmd filetype php set dictionary=$VIMFILES/dict/php.dict
 
 "-------------------不同文件类型对应不同设置结束--------------------
+
 
 "-------------------编译运行快捷键设置开始--------------------
 
@@ -703,7 +707,6 @@ Bundle "tpope/vim-surround"
 "********************vundle 配置结束**********************
 
 
-
 "-----------------------------------------------------------------
 " plugin - taglist.vim 查看函数列表，需要ctags程序
 " F4 打开隐藏taglist窗口
@@ -780,11 +783,6 @@ endfunction
 
 " don;t show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
-
-
-" Ctrl+C q Quickfix窗口关闭
-map <C-c>q :ccl<CR>
-imap <C-c>q <ESC>:ccl<CR>
 
 
 "*****************************************************
@@ -1283,8 +1281,6 @@ highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
 
 
-
-
 " -----------------------------------------------------------------------------
 " Airline 设置
 " -----------------------------------------------------------------------------
@@ -1304,7 +1300,6 @@ endif
 
 let g:airline_exclude_filename = []
 let g:airline_symbols.space = "\ua0"
-
 
 
 " -----------------------------------------------------------------------------
@@ -1329,7 +1324,6 @@ let g:vim_markdown_frontmatter=1
 let g:instant_markdown_autostart = 0
 " Set <leader>mp to manually trigger preview 
 nnoremap <leader>mp :InstantMarkdownPreview<CR>
-
 
 
 " -----------------------------------------------------------------------------
